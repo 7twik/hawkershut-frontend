@@ -1,0 +1,73 @@
+.signupOutDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("https://res.cloudinary.com/dcyfkgtgv/image/upload/v1678477127/login1_ob9zma.png");
+    height: 86vh;
+    background-size: cover;
+}
+.signup-section{
+    background-color: rgba(11, 78, 62, 0.650) ;
+    padding: 2vh 2vw;
+    height: 84vh;
+    width: 35vw;
+    margin-top: 1.8vh;
+}
+
+.form-heading{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.558);
+    padding-top: 2vh;
+}
+.signup-form-input{
+    display: flex;
+    flex-direction: column;
+    padding-left: 1vw;
+}
+.signup-label{
+    font-size: 2.8vh;
+    margin-bottom: 1.5vh;
+    color: #fff;
+}
+.signup-input{
+    min-width: 25vw;
+    height:4.5vh;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 2vh;
+}
+
+.signup-btn{
+    padding: 3px;
+    background-color:#1a365d;
+    color: #fff;
+    border: none;
+    margin-top: 3vh;  
+    margin-right: -7vw;
+    margin-left: 4vw;
+    margin-bottom: 2vh;
+}
+.topform123{
+   color: #fff;
+}
+@media (max-width:500px){
+    .signup-btn{
+        margin-left: 25vw;
+       width: max-content;
+       padding:1vh 2vw;
+       border-radius: 3px;
+    }
+    .signupOutDiv{
+        height: 100vh;
+    }
+    .signup-section{
+        width: 75vw;
+        height: 88vh;
+    }
+    .signup-btn{
+        margin-top: -1vh;
+        margin-bottom: 1vh;
+    }
+}

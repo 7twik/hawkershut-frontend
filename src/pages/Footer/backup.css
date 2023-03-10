@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Sevillana&family=Moon+Dance&family=McLaren&family=Montserrat&family=Oswald:wght@300&display=swap');
+.totalf{
+    padding-left: 3.5vw;
+    padding-right: 3.5vw;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10vh;
+    /* background-color:rgba(104, 32, 32, 0.423); */
+    background-color:rgba(44, 42, 42, 0.866); 
+    /* background-color: #ebd9d9; */
+    background-image: url("https://www.transparenttextures.com/patterns/debut-light.png");
+    
+}.footB{
+    display: flex;
+    justify-content: center;
+    height:20vh;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    color:rgb(15, 15, 15);
+}
+.footT{
+    display: flex;
+}
+.leftf{
+    width:30vw;
+    height:50vh;
+}
+.logF{
+    height: 15vh;
+}
+.middle,
+.rightf,
+.rightr{
+    width: 21vw;
+    height:40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color:#030303;
+}
+
+.leftf{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color:rgb(0, 0, 0);
+    text-shadow: 1px 1px red;
+}
+.logof{
+    font-size: 6vw;
+    font-family: Moon Dance;
+}
+.leftf-b{
+    width: 10vw;
+    display: flex;
+    justify-content: space-around;
+}
+.rightr ul{
+    list-style-type: none;
+    color:#080808;
+    padding-left: 2.5vh;
+    padding-right: 2.5vh;
+    padding-top: 4vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.middle ul{
+    list-style-type: none;
+    color:#0a0a0a;
+    padding-left: 2.5vh;
+    padding-right: 2.5vh;
+    padding-top: 4vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.rightf ul{
+    list-style-type: none;
+    color:#1b1a1a;
+    padding-left: 2.5vh;
+    padding-right: 2.5vh;
+    padding-top: 4vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+li{
+    padding-top: 1vh;
+}
+span{
+    font-size: larger;
+    font-family:  Poppins;
+    font-weight: 500;
+    color:rgb(219, 19, 19);
+    text-decoration: underline;    
+    padding-bottom: 5vh;
+}
+.ico{
+    font-size:2vw;
+}
+.ico:hover{
+    color:rgb(211, 29, 29);
+}
+@media (max-width: 600px) {
+    .footT{
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+
+    }
+    .ico{
+        font-size: 5vh;
+        padding-left: 2vh;
+        padding-right: 2vh;
+    }
+    .leftf,
+    .middle,
+    .rightf,
+    .rightr{
+        padding-top: 5vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+    a:hover{
+        color:red !important;
+    }
+}
