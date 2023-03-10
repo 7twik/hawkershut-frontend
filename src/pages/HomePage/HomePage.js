@@ -35,7 +35,7 @@ const HomePage = () => {
   };
   return (
     <>{(success)?
-    <><div className='Appo'>
+    <><div className='Appo' style={{overflowX:"hidden"}}>
     <Navbare user={currentUsername} logout={handleLogout}/>
         <header className="App-header">
         <div className="body">

@@ -74,7 +74,7 @@ function App() {
             
           </>
 
-        ) : <Box sx={{ display: 'flex', justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        ) : <Box sx={{ display: 'flex', justifyContent: "center", alignItems: "center", height: "100vh" }} className="loading" style={{color:"aliceblue"}}>
           Loading... &nbsp;
           <CircularProgress />
         </Box>

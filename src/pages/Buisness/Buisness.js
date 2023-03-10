@@ -148,7 +148,10 @@ function Buisness() {
     setCurrentUsername(null);
     myStorage.removeItem("user");
   };
-
+  let screenWidth = window.screen.width;
+  useEffect(()=>{
+    console.log(screenWidth)
+  },[])
   return (
     <>
     <Modal className="mode" open={open} onClose={onCloseModal} closeOnOverlayClick={false} center={true}>
@@ -169,7 +172,7 @@ function Buisness() {
           className="mapwidth"
             {...viewport}
             mapboxApiAccessToken="pk.eyJ1IjoiYmlzd2EwMDd4IiwiYSI6ImNsZWprNGs3YzBjOGczb21pZzc5cjJqczIifQ.JS_Zgjwbm9RDW9H8KmGqKg"
-            width="54vw"
+            width={(screenWidth>800) ? "54vw" : "90vw"}
             height="60vh"
             transitionDuration="200"
             mapStyle="mapbox://styles/safak/cknndpyfq268f17p53nmpwira"

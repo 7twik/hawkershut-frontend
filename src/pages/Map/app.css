@@ -5,7 +5,9 @@
     flex-direction: column;
     justify-content: space-around;
   }
-  
+  .mapwidth{
+    width: 54vw !important;
+  }
   label {
     width: max-content;
     color: tomato;

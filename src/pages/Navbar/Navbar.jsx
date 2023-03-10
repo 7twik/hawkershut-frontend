@@ -34,17 +34,17 @@ const Navbar = () => {
             <li className='hov'>
               <NavLink to="/business">Your business</NavLink>
             </li>
-            <li className='hov'>
-              <NavLink to="/blog">Blog</NavLink>
-            </li>
+            {/* <li className='hov'>
+              <NavLink to="/login">Login</NavLink>
+            </li> */}
             
             <li className='hov'>
-              <NavLink to="/about">About</NavLink>
+              <NavLink to="/register">SignUp</NavLink>
             </li>
             
-            <li className='hov'>
+            {/* <li className='hov'>
               <NavLink to="/">Contact</NavLink>
-            </li>
+            </li> */}
            
           </ul>
         </div>

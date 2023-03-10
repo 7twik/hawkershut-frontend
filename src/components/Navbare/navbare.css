@@ -152,3 +152,11 @@ a:hover{
     position: fixed;
     z-index: 1000 !important;
 }}
+
+.abt{
+  cursor: pointer;
+  
+}
+.abt:hover{
+  color:#1dbea6 !important;
+}

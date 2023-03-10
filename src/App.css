@@ -17,6 +17,11 @@ html{
   font-family: Poppins !important;
 }
 
+.loading{
+  color: aliceblue!important;
+
+}
+
 /* .App {
   text-align: center;
 }

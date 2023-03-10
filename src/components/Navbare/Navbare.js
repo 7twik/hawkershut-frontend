@@ -10,7 +10,7 @@ const Navbare = (props) => {
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
-  function logout(){
+  function logout() {
     window.location.reload();
   }
   return (
@@ -33,24 +33,30 @@ const Navbare = (props) => {
           </div>
           <div className={`nav-elements  ${showNavbar && "active"}`}>
             <ul>
+              <li className="hov">Welcome {props.user},</li>
+
               <li className="hov">
-                Welcome {props.user},
-              </li>
-              
-              <li className="hov">
-                <NavLink to="/">Contact</NavLink>
+                <NavLink to="/contact">Contact</NavLink>
               </li>
               <li className="hov">
                 <NavLink to="/blog">Blog</NavLink>
               </li>
 
               <li className="hov">
-                <NavLink to="/about">About</NavLink>
+                <div className="abt"
+                  onClick={() => {
+                    const element = document.getElementById("about");
+                    element.scrollIntoView();
+                  }}
+                >
+                  About
+                </div>
               </li>
               <li className="hov">
-                <NavLink to="/" onClick={props.logout}>Logout</NavLink>
+                <NavLink to="/" onClick={props.logout}>
+                  Logout
+                </NavLink>
               </li>
-              
             </ul>
           </div>
         </div>

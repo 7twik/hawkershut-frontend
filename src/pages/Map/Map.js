@@ -8,6 +8,7 @@ import Register from "../Register";
 import Login from "../Login";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { width } from "@mui/system";
 
 function Map() {
     AOS.init();
@@ -91,7 +92,11 @@ function Map() {
     setCurrentUsername(null);
     myStorage.removeItem("user");
   };
-
+  // var screen=Screen;
+  let screenWidth = window.screen.width;
+  useEffect(()=>{
+    console.log(screenWidth)
+  },[])
   return (
     <>
     <div className="parentcon" data-aos="fade-up" style={{overflowX:"hidden",display:"flex",justifyContent:"space-arond"}}>
@@ -100,7 +105,7 @@ function Map() {
       className="mapwidth"
       {...viewport}
       mapboxApiAccessToken="pk.eyJ1IjoiYmlzd2EwMDd4IiwiYSI6ImNsZWprNGs3YzBjOGczb21pZzc5cjJqczIifQ.JS_Zgjwbm9RDW9H8KmGqKg"
-      width="54vw"
+      width={(screenWidth>800) ? "54vw" : "90vw"}
       height="60vh"
       transitionDuration="200"
       mapStyle="mapbox://styles/safak/cknndpyfq268f17p53nmpwira"

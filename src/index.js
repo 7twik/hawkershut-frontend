@@ -12,7 +12,7 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-      <Context>
+    <Context>
         <BrowserRouter>
         
           <SSRProvider>
@@ -20,6 +20,6 @@ root.render(
           </SSRProvider>
           
         </BrowserRouter>
-      </Context>
+      </Context>  
 
 );
