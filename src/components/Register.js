@@ -44,7 +44,7 @@ const Register = () => {
       await axios.post("https://sea-lion-app-6nyh2.ondigitalocean.app/api/customers/register", newUser);
       setError(false);
       setSuccess(true);
-      window.location.replace("http://localhost:3000");
+      window.location.replace("https://stopby.onrender.com");
     } catch (err) {
       setError(true);
     }
