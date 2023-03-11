@@ -60,7 +60,7 @@ function App() {
         data ? (
           <>
             {/* <Navbar /> */}
-
+ {/* en,,hi,ta,ml,ur,mr,bn,gu,te */}
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -68,6 +68,15 @@ function App() {
               <Route path="*" element={<Error />} />
               <Route path="/" element={<HomePage />}/>
               <Route path="/business" element={<Buisness />}/>
+              <Route path="/business?lng=en" element={<Buisness />}/>
+              <Route path="/business?lng=hi" element={<Buisness />}/>
+              <Route path="/business?lng=ta" element={<Buisness />}/>
+              <Route path="/business?lng=ml" element={<Buisness />}/>
+              <Route path="/business?lng=ur" element={<Buisness />}/>
+              <Route path="/business?lng=mr" element={<Buisness />}/>
+              <Route path="/business?lng=bn" element={<Buisness />}/>
+              <Route path="/business?lng=gu" element={<Buisness />}/>
+              <Route path="/business?lng=te" element={<Buisness />}/>
               <Route path="/bregister" element={<BReg />}/>
               <Route path="/blogin" element={<BLog/>}/>
             </Routes>
