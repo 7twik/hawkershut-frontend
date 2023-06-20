@@ -131,7 +131,7 @@ function Buisness() {
   try {
     //console.log(newPin);
     const res = await axios.post(
-      "http://localhost:8080/api/pins/updatepins",
+      "https://hawkerhut-back.onrender.com/api/pins/updatepins",
       newPin
     );
   
