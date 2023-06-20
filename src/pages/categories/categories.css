@@ -41,40 +41,40 @@ color:whitesmoke;
   height:auto;
 }
 .col1{
-  background:url('./images/icecream.jpg');
+  background:url('../../../public/images/icecream.jpg');
   background-size: cover;
 }
 
 .col2{
-  background:url('./images/Vegetables.png');
+  background:url('../../../public/images/Vegetables.png');
   background-size: cover;
 }
 .col3{
-  background:url('./images/paniPuri.png');
+  background:url('../../../public/images/paniPuri.png');
   background-size: cover;
 }
 .col4{
-  background:url('./images/streetfood.png');
+  background:url('../../../public/images/streetfood.png');
   background-size: cover;
 }
 .col5{
-  background:url('./images/bakery.png');
+  background:url('../../../public/images/bakery.png');
   background-size: cover;
 }
 .col6{
-  background:url('./images/cold_drinks.jpg');
+  background:url('../../../public/images/cold_drinks.jpg');
   background-size: cover;
 }
 .col7{
-  background:url('./images/fish.jpg');
+  background:url('../../../public/images/fish.jpg');
   background-size: cover;
 }
 .col8{
-  background:url('./images/cobbler.jpg');
+  background:url('../../../public/images/cobbler.jpg');
   background-size: cover;
 }
 .col9{
-  background:url('./images/electronics.jpg');
+  background:url('../../../public/images/electronics.jpg');
   background-size: cover;
 }
 
