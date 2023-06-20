@@ -49,6 +49,7 @@
     "react-scripts": "5.0.1",
     "react-scroll-motion": "^0.3.2",
     "react-select": "^5.7.0",
+    "react-switch": "^7.0.0",
     "react-tabs": "^6.0.0",
     "react-toastify": "^9.1.1",
     "reactjs-popup": "^2.0.5",

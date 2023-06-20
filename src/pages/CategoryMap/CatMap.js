@@ -1,16 +1,16 @@
 import "./app.css";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { useEffect, useState } from "react";
-import { Room, Star, StarBorder } from "@material-ui/icons";
+import { Room } from "@material-ui/icons";
 import axios from "axios";
 import { format } from "timeago.js";
-import Register from "../Register";
-import Login from "../Login";
+// import Register from "../Register";
+// import Login from "../Login";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { width } from "@mui/system";
+//import { width } from "@mui/system";
 
-function Map() {
+function CatMap(props) {
     AOS.init();
   const myStorage = window.localStorage;
   const [currentUsername, setCurrentUsername] = useState(myStorage.getItem("user"));
@@ -25,8 +25,8 @@ function Map() {
     longitude: 17.071727,
     zoom: 10,
   });
-  const [showRegister, setShowRegister] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
+//   const [showRegister, setShowRegister] = useState(false);
+//   const [showLogin, setShowLogin] = useState(false);
 
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
@@ -79,8 +79,21 @@ function Map() {
   useEffect(() => {
     const getPins = async () => {
       try {
-        const allPins = await axios.get("https://hawkerhut-back.onrender.com/api/pins");
-        setPins(allPins.data);
+        console.log("checkkk"+props.category);
+        const options ={
+            method: 'GET',
+            url: 'https://hawkerhut-back.onrender.com/api/pins/category',
+            params: {Category: props.category},
+         };
+         axios.request(options).then((response) => {
+            console.log(response.data)
+            
+           setPins(response.data)
+
+        }).catch((error) => {
+            console.error(error)
+        })
+         
       } catch (err) {
         console.log(err);
       }
@@ -127,7 +140,7 @@ function Map() {
               }}
             />
           </Marker>
-      {pins.map((p) => (
+      {(pins==null)?<></>:pins.map((p) => (
         <>
           <Marker
             latitude={p.lat}
@@ -158,19 +171,19 @@ function Map() {
               className="map-popup"
             >
               <div className="card">
-                <label >Place</label>
+                <label >Category:</label>
                 <h4 className="place">{p.title}</h4>
-                <label >Review</label>
+                <label >Items:</label>
                 <p className="desc">{p.desc}</p>
-                <label >Rating</label>
+                {/* <label >Rating</label>
                 <div className="stars">
                   {Array(p.rating).fill(<Star className="star" />)}
-                </div>
+                </div> */}
                 <label >Information</label>
                 <span className="username">
                   Created by <b>{p.username}</b>
                 </span>
-                <span className="date">{format(p.createdAt)}</span>
+                {/* <span className="date">{format(p.createdAt)}</span> */}
               </div>
             </Popup>
           )}
@@ -181,13 +194,15 @@ function Map() {
   </div>
   <div className="writeup" style={{display:"flex",flexDirection:"column",justifyContent:"center",marginRight:"10vh"}}>
   <div className="writeuph"><h2 style={{color:"white"}}>Your Own Business</h2></div> 
-    <span style={{color:"white"}}>Welcome to your very own online buiness portal.Check out for what you want and start shopping!!!</span>
+    <span style={{color:"white"}}>Welcome to your very own online buiness portal.Set your Hawker's ID to get your business rolling!!!</span>
     
     <div className="btn_div"><button className="btn_start" style={{backgroundColor:"green"}}>Get Started</button></div>
   </div>
+  
+  
   </div>
     </>
   );
 }
 
-export default Map;
+export default CatMap;

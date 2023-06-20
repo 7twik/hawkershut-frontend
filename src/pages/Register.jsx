@@ -19,7 +19,7 @@ export default function Register({ setShowRegister }) {
     };
 
     try {
-      await axios.post("https://sea-lion-app-6nyh2.ondigitalocean.app/api/users/register", newUser);
+      await axios.post("https://hawkerhut-back.onrender.com/api/users/register", newUser);
       setError(false);
       setSuccess(true);
     } catch (err) {

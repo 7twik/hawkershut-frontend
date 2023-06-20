@@ -14,7 +14,7 @@ const Dashboard = () => {
   const DashboardValid = async () => {
     let token = localStorage.getItem("usersdatatoken");
     console.log(token2[0]);
-    const res = await fetch("https://sea-lion-app-6nyh2.ondigitalocean.app/validuser", {
+    const res = await fetch("https://hawkerhut-back.onrender.com/validuser", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

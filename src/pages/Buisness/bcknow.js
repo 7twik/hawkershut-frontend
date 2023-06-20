@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { useEffect, useState } from "react";
 import { Room, Star, StarBorder } from "@material-ui/icons";
-import axios, { all } from "axios";
+import axios from "axios";
 import { format } from "timeago.js";
 import Register from "../Register";
 import Login from "../Login";
@@ -40,8 +40,7 @@ function Buisness() {
 
   const [lang, setLang] = useState(myStoragee.getItem("Language"));
 
-  // This function put query that helps to
-  // change the language
+  // This function put query that helps to change the language
   const handleChange = (e) => {
     setLang(e.target.value);
     let loc = "https://stopby.onrender.com/business";
@@ -64,13 +63,9 @@ function Buisness() {
   const [currentUsername, setCurrentUsername] = useState(
     myStorage.getItem("user")
   );
-  
-  const [currentTitle, setCurrentTitle] = useState(
-    myStorage.getItem("title")
-  );
-  const [currentDesc, setCurrentDesc] = useState(
-    myStorage.getItem("Desc")
-  );
+
+  const [currentTitle, setCurrentTitle] = useState(myStorage.getItem("title"));
+  const [currentDesc, setCurrentDesc] = useState(myStorage.getItem("Desc"));
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
@@ -91,112 +86,64 @@ function Buisness() {
     setViewport({ ...viewport, latitude: lat, longitude: long });
   };
 
+  const handleAddClick = (e) => {
+    const [longitude, latitude] = e.lngLat;
+    setNewPlace({
+      lat: latitude,
+      long: longitude,
+    });
+    setCheck(true);
+  };
   const [per, Sper] = useState({
     lat: 47.040182,
     long: 17.071727,
   });
 
+  useEffect(() => {
+    if (checked) {
+      setInterval(() => {
+        console.log("d");
+        handleSubmit();
+        handleSubmite();
+      }, 10000);
+    }
+  }, []);
 
- const locUp = async() => {
-  navigator.geolocation.getCurrentPosition((pos) => {
-    setViewport({
-      ...viewport,
-      latitude: pos.coords.latitude,
-      longitude: pos.coords.longitude,
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      setViewport({
+        ...viewport,
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      });
+      Sper({
+        lat: pos.coords.latitude,
+        long: pos.coords.longitude,
+      });
     });
-    setLat1(pos.coords.latitude);
-    setLong1(pos.coords.longitude);
-    Sper({
-      lat: pos.coords.latitude,
-      long: pos.coords.longitude,
-    });
-  });
- }
- useEffect(() => {
-  locUp();
-},[]);
-
-
-
-//AUTO UPDATE LOCATION CODE HERE
- const handleSubmite2 = async (lat,long) => {
-  
-  const newPin = {
-    username: currentUsername,
-    title,
-    desc,
-    lat: lat,
-    long: long,
-  };
-  try {
-    //console.log(newPin);
-    const res = await axios.post(
-      "http://localhost:8080/api/pins/updatepins",
-      newPin
-    );
-  
-    setCheck(false);
-    setNewPlace(null);
-  } catch (err) {
-    console.log(err);
-  }
-  // window.location.reload();
-};
-
- const locUp2 = async() => {
-  var l1,l2;
-  navigator.geolocation.getCurrentPosition((pos) => {
-    
-    l1=pos.coords.latitude;
-    l2=pos.coords.longitude;
-    
-    handleSubmite2(l1,l2);
-  });
-  
- }
- React.useEffect(() => {
-  start();
-  
-},[]);
-function start(){
-  let timerId =setInterval(() => {
-    locUp2(per.lat,per.long);
-  }, 5000);
-}
-//END OF AUTO LOCATION UPDATE CODE
-
-///START OF ON VALUE CHANGE CODE
-
-  const [lat1,setLat1]=React.useState("0");
-  const [long1,setLong1]=React.useState("0");
- 
-  const handleSubmit3 = async () => {
+  }, []);
+  const [lat1, setLat1] = React.useState("0");
+  const [long1, setLong1] = React.useState("0");
+  const handleSubmit = async (e) => {
     let lat1, long1;
-    
-     navigator.geolocation.getCurrentPosition(async (posi) => {
+    // e.preventDefault();
+
+    navigator.geolocation.getCurrentPosition(async (posi) => {
       setViewport({
         ...viewport,
         latitude: posi.coords.latitude,
         longitude: posi.coords.longitude,
       });
-      const lattt={
-        lat:posi.coords.latitude,
-        long:posi.coords.longitude
-      }
-      //console.log(lattt.lat+","+lattt.long);
-      setLat1(()=>{const newl=posi.coords.latitude;
-        return newl;
-      });
-      setLong1(()=>{const newl=posi.coords.longitude;
-        return newl;
-      });
-      
+      console.log(posi.coords.latitude + "," + posi.coords.longitude);
+      lat1 = posi.coords.latitude;
+      long1 = posi.coords.longitude;
+      setLat1(posi.coords.latitude);
+      setLong1(posi.coords.longitude);
     });
+    console.log("title: " + title + ",,desc: " + desc);
     await handleSubmite();
-  }
- 
+  };
   const handleSubmite = async (e) => {
-  
     const newPin = {
       username: currentUsername,
       title,
@@ -205,12 +152,12 @@ function start(){
       long: long1,
     };
     try {
-      //console.log(newPin);
+      console.log(newPin);
       const res = await axios.post(
         "https://hawkerhut-back.onrender.com/api/pins",
         newPin
       );
-    
+
       setCheck(false);
       setNewPlace(null);
     } catch (err) {
@@ -218,12 +165,22 @@ function start(){
     }
     // window.location.reload();
   };
-///END OF ON VALUE CHANGE CODE
 
+  useEffect(() => {
+    const getPins = async () => {
+      try {
+        const allPins = await axios.get(
+          "https://hawkerhut-back.onrender.com/api/pins"
+        );
+        setPins(allPins.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getPins();
+  }, []);
 
- 
-
-  const handleLogout = () => { //logout function
+  const handleLogout = () => {
     setCurrentUsername(null);
     myStorage.removeItem("user");
   };
@@ -231,55 +188,37 @@ function start(){
   // useEffect(() => {
   //   //console.log(screenWidth);
   // }, []);
-  React.useEffect(() => {
-    console.log(myStoragee.getItem("Checked"));
-  }, []);
- // const [checked, setChecked] = useState((myStoragee.getItem("Checked")===null)?false:myStorage.getItem("Checked")); //variable for business hours
-const [checked, setChecked] = useState(myStoragee.getItem("Checked")); //variable for business hours
-  const handleChange1 = async(val) => { ///FUNCTION FOR BUSINESS HOURS
+
+  const [checked, setChecked] = useState(true);
+
+  const handleChange1 = (val) => {
     setChecked(val);
-    console.log(val);
-    myStoragee.setItem("Checked", val);
-    console.log(myStoragee.getItem("Checked"));
-    if (!val)
-    {
+    if (!val) {
       const newPin = {
-        username: currentUsername
-      }
-      const res =await axios.post(
+        username: currentUsername,
+      };
+      const res = axios.post(
         "https://hawkerhut-back.onrender.com/api/pins/del",
         newPin
       );
       console.log(res);
-      
+      const getPins = async () => {
+        try {
+          const allPins = await axios.get(
+            "https://hawkerhut-back.onrender.com/api/pins"
+          );
+          setPins(() => {
+            const new1= allPins.data;
+            return new1;
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getPins();
+      // window.location.reload();
     }
-    if(!val)
-    {
-      window.location.reload();
-    }
-    if(val)
-    {
-      await handleSubmite();
-      window.location.reload();
-    }
-   
   };
-
-  useEffect(() => { //FUNCTION TO GET PINS FROM DATABASE ON MAP
-    const getPins = async () => {
-      try {
-        const allPins = await axios.get(
-          "https://hawkerhut-back.onrender.com/api/pins"
-        );
-        console.log(allPins.data);
-        setPins(()=>{const newl=allPins.data;
-          return newl;});
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getPins();
-  },[checked]);
 
   return (
     <>
@@ -322,9 +261,9 @@ const [checked, setChecked] = useState(myStoragee.getItem("Checked")); //variabl
               longitude={per.long}
               offsetLeft={-3.5 * viewport.zoom}
               offsetTop={-7 * viewport.zoom}
-              // onClick={() => {
-              //   handleSubmit();
-              // }}
+              onClick={() => {
+                handleSubmit();
+              }}
             >
               <Room
                 style={{
@@ -393,7 +332,6 @@ const [checked, setChecked] = useState(myStoragee.getItem("Checked")); //variabl
                     }}
                   />
                 </Marker>
-             
               </>
             )}
           </ReactMapGL>
@@ -466,18 +404,18 @@ const [checked, setChecked] = useState(myStoragee.getItem("Checked")); //variabl
           )}
 
           <div>
-            {checked && (currentUsername!==null) && (
+            {checked && (
               <>
-                <form className="busi_form">
+                <form className="busi_form" onSubmit={handleSubmit}>
                   <label>Category:</label>
-                  <select value={title} onChange={async (e) => 
-                    {
+                  <select
+                    onChange={async (e) => {
                       setTitle(e.target.value);
                       myStorage.setItem("Title", e.target.value);
-                      handleSubmit3();
-                    }}>
-
-                  <option value="">Options</option>
+                      handleSubmit();
+                    }}
+                  >
+                    <option value="">Options</option>
                     <option value="Ice-Cream">Ice-Cream</option>
                     <option value="Vegetables">Vegetables</option>
                     <option value="Cobbler">Cobbler</option>
@@ -490,14 +428,16 @@ const [checked, setChecked] = useState(myStoragee.getItem("Checked")); //variabl
                   </select>
                   <label>Description</label>
                   <textarea
-                    value={desc}
-                    placeholder="Say us what you are selling"
+                    placeholder="Tell us what you are selling"
                     onChange={(e) => {
                       setDesc(e.target.value);
                       myStorage.setItem("Desc", e.target.value);
-                      handleSubmit3();
+                      handleSubmit();
                     }}
                   />
+                  <button type="submit" className="submitButton">
+                    Add Pin
+                  </button>
                 </form>
               </>
             )}

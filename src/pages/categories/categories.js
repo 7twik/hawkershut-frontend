@@ -3,7 +3,14 @@ import '../categories/categories.css'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 const Categories = () => {
+  const myStoragee = window.localStorage;
+  //const [lang, setLang] = React.useState(myStoragee.getItem("Category"));
   AOS.init();
+  function handleClick(e){
+    myStoragee.setItem('Category', e.target.getAttribute('value'));
+    console.log(e.target.getAttribute('value'));
+    window.location.href="http://localhost:3000/category";
+  }
   return (
     <div>
         <div className="container-fluid text-center">
@@ -11,31 +18,31 @@ const Categories = () => {
   <div className="Faqq" data-aos="fade-up">
           Categories
         </div>
-    <div className="col-lg-4 col1" data-aos="fade-up-right">
+    <div className="col-lg-4 col1" onClick={handleClick} data-aos="fade-up-right" value="Ice-Cream">
       Ice-Cream
     </div>
-    <div className="col-lg-4 col2" data-aos="fade-up">
+    <div className="col-lg-4 col2" onClick={handleClick} data-aos="fade-up" value="Vegetables">
       Vegetables
     </div>
-    <div className="col-lg-4 col3" data-aos="fade-up-left">
-      Pani Puri
+    <div className="col-lg-4 col3" onClick={handleClick} data-aos="fade-up-left" value="All">
+      All in one Store
     </div>
-    <div className="col-lg-4 col4" data-aos="fade-up-right">
+    <div className="col-lg-4 col4" onClick={handleClick} data-aos="fade-up-right" value="Street">
       Street Food
     </div>
-    <div className="col-lg-4 col5" data-aos="fade-up">
+    <div className="col-lg-4 col5" onClick={handleClick} data-aos="fade-up" value="Bakery">
       Bakery
     </div>
-    <div className="col-lg-4 col6" data-aos="fade-up-left">
-      Cold Drinks
+    <div className="col-lg-4 col6" onClick={handleClick} data-aos="fade-up-left" value="Recycle">
+      Recycle
     </div>
-    <div className="col-lg-4 col7" data-aos="fade-up-right">
+    <div className="col-lg-4 col7" onClick={handleClick} data-aos="fade-up-right" value="Fish">
       Fish
     </div>
-    <div className="col-lg-4 col8" data-aos="fade-up">
+    <div className="col-lg-4 col8" onClick={handleClick} data-aos="fade-up" value="Cobbler">
       Cobbler
     </div>
-    <div className="col-lg-4 col9" data-aos="fade-up-left">
+    <div className="col-lg-4 col9" onClick={handleClick} data-aos="fade-up-left" value="Electrician">
       Electrician
     </div>
   </div>

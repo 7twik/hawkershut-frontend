@@ -35,7 +35,7 @@ const Login = ({ setShowLogin, setCurrentUsername,myStorage }) => {
       password: inpval.password,
     };
     try {
-      const res = await axios.post("https://sea-lion-app-6nyh2.ondigitalocean.app/api/customers/login", user);
+      const res = await axios.post("https://hawkerhut-back.onrender.com/api/customers/login", user);
       setCurrentUsername(res.data.username);
       myStorage.setItem('Customeruser', res.data.username);
       setShowLogin(true)

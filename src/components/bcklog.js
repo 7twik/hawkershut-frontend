@@ -50,7 +50,7 @@ const Login = (props) => {
       });
     } else {
       const data = await fetch(
-        "https://sea-lion-app-6nyh2.ondigitalocean.app/login",
+        "https://hawkerhut-back.onrender.com/login",
         {
           method: "GET",
         }

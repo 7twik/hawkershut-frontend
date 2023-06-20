@@ -1,5 +1,5 @@
 import "./app.css";
-import React from "react"
+import React, { useRef } from "react"
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { useEffect, useState } from "react";
 import { Room, Star, StarBorder } from "@material-ui/icons";
@@ -12,49 +12,58 @@ import Navbar from "../Navbar/Navbar";
 import { useTranslation } from 'react-i18next'
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
+import GetStarted from "../GetStarted/GetStarted";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 // Contains the value and text for the options
 const languages = [
-    { value: '', text: "Options" },
-    { value: 'en', text: "English" },
-    { value: 'hi', text: "Hindi" },
-    { value: 'ta', text: "Tamil" },
-    { value: 'ml', text: "Malayalam" },
-    { value: 'ur', text: "Urdu" },
-    { value: 'mr', text: "Marathi" },
-    { value: 'bn', text: "Bengali" },
-    { value: 'gu', text: "Gujarati" },
-    { value: 'te', text: "Telugu" }
+  { value: '', text: "Options" },
+  { value: 'en', text: "English" },
+  { value: 'hi', text: "Hindi" },
+  { value: 'ta', text: "Tamil" },
+  { value: 'ml', text: "Malayalam" },
+  { value: 'ur', text: "Urdu" },
+  { value: 'mr', text: "Marathi" },
+  { value: 'bn', text: "Bengali" },
+  { value: 'gu', text: "Gujarati" },
+  { value: 'te', text: "Telugu" }
 ]
 function Buisness() {
+
+  AOS.init();
+  const myStoragee = window.localStorage;
+
+  const [currentLang, setCurrentLang] = React.useState(myStoragee.getItem("Language"));
   const { t } = useTranslation(); 
   
-    const [lang, setLang] = useState('en');
-  
-    // This function put query that helps to 
-    // change the language
-    const handleChange = e => { 
-        setLang(e.target.value);
-        let loc = "http://localhost:3000/";
-        window.location.replace(loc + "?lng=" + e.target.value);
-    }
-    function myGreeting()
-    {
-      onOpenModal();
-     // setApp("toaste");
-    }
-    React.useEffect(()=>{
-      setTimeout(myGreeting, 5000);
-    },[]);
-    const [open, setOpen] = React.useState(false);
-  
-    const onOpenModal = () => setOpen(true);
-    const onCloseModal = () => setOpen(false);
-  
+  const [lang, setLang] = useState(myStoragee.getItem("Language"));
 
+  // This function put query that helps to 
+  // change the language
+  const handleChange = e => { 
+      setLang(e.target.value);
+      let loc = "https://stopby.onrender.com/business";
+      window.location.replace(loc + "?lng=" + e.target.value);
+      myStorage.setItem('Language', e.target.value);
+  }
+  function myGreeting()
+  {
+    onOpenModal();
+   // setApp("toaste");
+  }
+  React.useEffect(()=>{
+    setTimeout(myGreeting, 5000);
+  },[]);
+  const [open, setOpen] = React.useState(false);
 
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
 
   const myStorage = window.localStorage;
-  const [currentUsername, setCurrentUsername] = useState(myStorage.getItem("user"));
+  const [currentUsername, setCurrentUsername] = useState(
+    myStorage.getItem("user")
+  );
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
@@ -81,20 +90,21 @@ function Buisness() {
       long: longitude,
     });
   };
-  const [per,Sper]=useState({
+  const [per, Sper] = useState({
     lat: 47.040182,
-    long: 17.071727,})
+    long: 17.071727,
+  });
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(pos => {
+    navigator.geolocation.getCurrentPosition((pos) => {
       setViewport({
         ...viewport,
         latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude
+        longitude: pos.coords.longitude,
       });
       Sper({
         lat: pos.coords.latitude,
-        long: pos.coords.longitude
-      })
+        long: pos.coords.longitude,
+      });
     });
   }, []);
   const handleSubmit = async (e) => {
@@ -109,7 +119,10 @@ function Buisness() {
     };
 
     try {
-      const res = await axios.post("https://sea-lion-app-6nyh2.ondigitalocean.app/api/pins", newPin);
+      const res = await axios.post(
+        "https://hawkerhut-back.onrender.com/api/pins",
+        newPin
+      );
       setPins([...pins, res.data]);
       setNewPlace(null);
     } catch (err) {
@@ -120,7 +133,9 @@ function Buisness() {
   useEffect(() => {
     const getPins = async () => {
       try {
-        const allPins = await axios.get("https://sea-lion-app-6nyh2.ondigitalocean.app/api/pins");
+        const allPins = await axios.get(
+          "https://hawkerhut-back.onrender.com/api/pins"
+        );
         setPins(allPins.data);
       } catch (err) {
         console.log(err);
@@ -133,13 +148,10 @@ function Buisness() {
     setCurrentUsername(null);
     myStorage.removeItem("user");
   };
-
-
-
-
-
-
-  
+  let screenWidth = window.screen.width;
+  useEffect(()=>{
+    console.log(screenWidth)
+  },[])
   return (
     <>
     <Modal className="mode" open={open} onClose={onCloseModal} closeOnOverlayClick={false} center={true}>
@@ -157,15 +169,15 @@ function Buisness() {
       <div className="parentcon">
         <div className="mapdiv">
           <ReactMapGL
+          className="mapwidth"
             {...viewport}
             mapboxApiAccessToken="pk.eyJ1IjoiYmlzd2EwMDd4IiwiYSI6ImNsZWprNGs3YzBjOGczb21pZzc5cjJqczIifQ.JS_Zgjwbm9RDW9H8KmGqKg"
-            width="54vw"
+            width={(screenWidth>800) ? "54vw" : "90vw"}
             height="60vh"
             transitionDuration="200"
             mapStyle="mapbox://styles/safak/cknndpyfq268f17p53nmpwira"
             onViewportChange={(viewport) => setViewport(viewport)}
             onDblClick={currentUsername && handleAddClick}
-            className="mapwidth"
           >
             <Marker
               latitude={per.lat}
@@ -292,9 +304,12 @@ function Buisness() {
           </span>
           <div className="busi_buttons">
             <div className="btn_div">
-              <button className="btn_start" style={{ background: "green" }}>
+            <button className="btn_start" style={{ background: "green" }} onClick={()=>{
+             const element = document.getElementById("gets");
+              element.scrollIntoView();
+            }}>
               {t('b1')}
-              </button>
+              </button>          
             </div>
             {currentUsername ? (
               <div className="btn_div">
@@ -331,34 +346,15 @@ function Buisness() {
               myStorage={myStorage}
             />
           )}
-
-          {/* {currentUsername ? (
-        <button className="button logout" onClick={handleLogout}>
-          Log out
-        </button>
-      ) : (
-        <div className="buttons">
-          <button className="button login" onClick={() => setShowLogin(true)}>
-            Log in
-          </button>
-          <button
-            className="button register"
-            onClick={() => setShowRegister(true)}
-          >
-            Register
-          </button>
-        </div>
-      )}
-      {showRegister && <Register setShowRegister={setShowRegister} />}
-      {showLogin && (
-        <Login
-          setShowLogin={setShowLogin}
-          setCurrentUsername={setCurrentUsername}
-          myStorage={myStorage}
-        />
-      )} */}
         </div>
       </div>
+      <div className="beforeGS" data-aos="fade-up">
+      {t('beforeGS')}
+      </div>
+      <div id="gets">
+      <GetStarted  lang={lang} data-aos="fade-up" />
+      </div>
+      
       <Footer />
     </>
   );

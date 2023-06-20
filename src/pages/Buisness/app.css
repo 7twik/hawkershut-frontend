@@ -1,9 +1,10 @@
 .card {
-  width: 250px;
-  height: 250px;
+  width: 250px !important;
+  height: 250px !important;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  z-index: 10000 !important;
 }
 
 .parentcon {
@@ -44,13 +45,16 @@ label {
   font-size: 12px;
 }
 
-form {
+.busi_form {
+  margin-top: 4vh;
+  padding: 1vh 1vw;
   width: 250px;
   height: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; 
   color: rgb(181, 28, 28);
+  background-color: rgb(99, 96, 96);
 }
 
 input {
@@ -176,4 +180,8 @@ textarea {
   justify-content: center;
   color:aliceblue;
   padding-top: 5vh;
+}
+
+.mapboxgl-popup{
+  z-index: 10 !important;
 }

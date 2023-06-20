@@ -15,6 +15,7 @@ import BReg from "./pages/BReg/BReg";
 import BLog from "./pages/BLog/BLog";
 
 import "./i18n.js"
+import Cate from "./pages/CategoryMajor/Cate";
 function App() {
 
   const [data, setData] = useState(false);
@@ -27,7 +28,7 @@ function App() {
   const DashboardValid = async () => {
     let token = localStorage.getItem("usersdatatoken");
 
-    const res = await fetch("https://sea-lion-app-6nyh2.ondigitalocean.app/validuser", {
+    const res = await fetch("https://hawkerhut-back.onrender.com/validuser", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +39,7 @@ function App() {
     const data = await res.json();
 
     if (data.status == 401 || !data) {
-      // console.log("user not valid");
+      console.log("user not valid");
     } else {
       console.log("user verify");
       setLoginData(data)
@@ -64,7 +65,7 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/dash" element={<Dashboard />} />
+              {/* <Route path="/dash" element={<Dashboard />} /> */}
               <Route path="*" element={<Error />} />
               <Route path="/" element={<HomePage />}/>
               <Route path="/business" element={<Buisness />}/>
@@ -79,6 +80,7 @@ function App() {
               <Route path="/business?lng=te" element={<Buisness />}/>
               <Route path="/bregister" element={<BReg />}/>
               <Route path="/blogin" element={<BLog/>}/>
+              <Route path="/category" element={<Cate />} />
             </Routes>
             
           </>
