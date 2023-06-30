@@ -128,11 +128,12 @@ textarea {
 .btn_start {
   /* background-color: rgb(5, 219, 5); */
   padding: 8px;
-  border-radius: 3px;
+  border-radius: 5px;
   color: azure;
   font-size: 16px;
   font-weight: 600;
   margin-top: 2vh;
+  cursor: pointer;
 }
 
 .busi_buttons {
@@ -185,3 +186,5 @@ textarea {
 .mapboxgl-popup{
   z-index: 10 !important;
 }
+
+

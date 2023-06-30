@@ -2,7 +2,7 @@ import { useState } from 'react';
  import { NavLink } from 'react-router-dom';
 import './navbar.css';
 //import { bars } from '@fortawesome/free-solid-svg-icons';
-
+//////////////////////LANDING PAGE NAVBAR /////////////////
 import { BsFillHddStackFill } from "react-icons/bs";
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false)
@@ -38,9 +38,9 @@ const Navbar = () => {
               <NavLink to="/login">Login</NavLink>
             </li> */}
             
-            <li className='hov'>
+            {/* <li className='hov'>
               <NavLink to="/register">SignUp</NavLink>
-            </li>
+            </li> */}
             
             {/* <li className='hov'>
               <NavLink to="/">Contact</NavLink>

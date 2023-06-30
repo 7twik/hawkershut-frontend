@@ -8,7 +8,7 @@ import { format } from "timeago.js";
 import Register from "../Register";
 import Login from "../Login";
 import Footer from "../Footer/Footer";
-import BNavbar from "../BNavbar/BNavbar";
+import Navbar from "../Navbar/Navbar";
 import { useTranslation } from "react-i18next";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
@@ -16,8 +16,6 @@ import GetStarted from "../GetStarted/GetStarted";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ReactSwitch from "react-switch";
-import BPastorders from "../BPastorders/BPastorders";
-import BCurrentorders from "../BCurrentorders/BCurrentorders";
 // Contains the value and text for the options
 const languages = [
   { value: "", text: "Options" },
@@ -46,7 +44,7 @@ function Buisness() {
   // change the language
   const handleChange = (e) => {
     setLang(e.target.value);
-    let loc = "http://localhost:3000/business";
+    let loc = "https://stopby.onrender.com/business";
     window.location.replace(loc + "?lng=" + e.target.value);
     myStorage.setItem("Language", e.target.value);
   };
@@ -66,9 +64,13 @@ function Buisness() {
   const [currentUsername, setCurrentUsername] = useState(
     myStorage.getItem("user")
   );
-
-  const [currentTitle, setCurrentTitle] = useState(myStorage.getItem("title"));
-  const [currentDesc, setCurrentDesc] = useState(myStorage.getItem("Desc"));
+  
+  const [currentTitle, setCurrentTitle] = useState(
+    myStorage.getItem("title")
+  );
+  const [currentDesc, setCurrentDesc] = useState(
+    myStorage.getItem("Desc")
+  );
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
@@ -81,13 +83,9 @@ function Buisness() {
     longitude: 17.071727,
     zoom: 9,
   });
-  const [tab,setTab]=useState(0);
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
 
-  const changeTab = (index) => {
-    setTab(index);
-  };
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
     setViewport({ ...viewport, latitude: lat, longitude: long });
@@ -98,100 +96,107 @@ function Buisness() {
     long: 17.071727,
   });
 
-  const locUp = async () => {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      setViewport({
-        ...viewport,
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude,
-      });
-      setLat1(pos.coords.latitude);
-      setLong1(pos.coords.longitude);
-      Sper({
-        lat: pos.coords.latitude,
-        long: pos.coords.longitude,
-      });
+
+ const locUp = async() => {
+  navigator.geolocation.getCurrentPosition((pos) => {
+    setViewport({
+      ...viewport,
+      latitude: pos.coords.latitude,
+      longitude: pos.coords.longitude,
     });
-  };
-  useEffect(() => {
-    locUp();
-  }, []);
-
-  //AUTO UPDATE LOCATION CODE HERE
-  const handleSubmite2 = async (lat, long) => {
-    const newPin = {
-      username: currentUsername,
-      title,
-      desc,
-      lat: lat,
-      long: long,
-    };
-    try {
-      //console.log(newPin);
-      const res = await axios.post(
-        "https://hawkerhut-back.onrender.com/api/pins/updatepins",
-        newPin
-      );
-
-      setCheck(false);
-      setNewPlace(null);
-    } catch (err) {
-      console.log(err);
-    }
-    // window.location.reload();
-  };
-
-  const locUp2 = async () => {
-    var l1, l2;
-    navigator.geolocation.getCurrentPosition((pos) => {
-      l1 = pos.coords.latitude;
-      l2 = pos.coords.longitude;
-
-      handleSubmite2(l1, l2);
+    setLat1(pos.coords.latitude);
+    setLong1(pos.coords.longitude);
+    Sper({
+      lat: pos.coords.latitude,
+      long: pos.coords.longitude,
     });
+  });
+ }
+ useEffect(() => {
+  locUp();
+},[]);
+
+
+
+//AUTO UPDATE LOCATION CODE HERE
+ const handleSubmite2 = async (lat,long) => {
+  
+  const newPin = {
+    username: currentUsername,
+    title,
+    desc,
+    lat: lat,
+    long: long,
   };
-  React.useEffect(() => {
-    start();
-  }, []);
-  function start() {
-    let timerId = setInterval(() => {
-      locUp2(per.lat, per.long);
-    }, 5000);
+  try {
+    //console.log(newPin);
+    const res = await axios.post(
+      "https://hawkerhut-back.onrender.com/api/pins/updatepins",
+      newPin
+    );
+  
+    setCheck(false);
+    setNewPlace(null);
+  } catch (err) {
+    console.log(err);
   }
-  //END OF AUTO LOCATION UPDATE CODE
+  // window.location.reload();
+};
 
-  ///START OF ON VALUE CHANGE CODE
+ const locUp2 = async() => {
+  var l1,l2;
+  navigator.geolocation.getCurrentPosition((pos) => {
+    
+    l1=pos.coords.latitude;
+    l2=pos.coords.longitude;
+    
+    handleSubmite2(l1,l2);
+  });
+  
+ }
+ React.useEffect(() => {
+  start();
+  
+},[]);
+function start(){
+  let timerId =setInterval(() => {
+    locUp2(per.lat,per.long);
+  }, 5000);
+}
+//END OF AUTO LOCATION UPDATE CODE
 
-  const [lat1, setLat1] = React.useState("0");
-  const [long1, setLong1] = React.useState("0");
+///START OF ON VALUE CHANGE CODE
 
+  const [lat1,setLat1]=React.useState("0");
+  const [long1,setLong1]=React.useState("0");
+ 
   const handleSubmit3 = async () => {
     let lat1, long1;
-
-    navigator.geolocation.getCurrentPosition(async (posi) => {
+    
+     navigator.geolocation.getCurrentPosition(async (posi) => {
       setViewport({
         ...viewport,
         latitude: posi.coords.latitude,
         longitude: posi.coords.longitude,
       });
-      const lattt = {
-        lat: posi.coords.latitude,
-        long: posi.coords.longitude,
-      };
+      const lattt={
+        lat:posi.coords.latitude,
+        long:posi.coords.longitude
+      }
       //console.log(lattt.lat+","+lattt.long);
-      setLat1(() => {
-        const newl = posi.coords.latitude;
+      setLat1(()=>{const newl=posi.coords.latitude;
         return newl;
       });
-      setLong1(() => {
-        const newl = posi.coords.longitude;
+      setLong1(()=>{const newl=posi.coords.longitude;
         return newl;
       });
+      
     });
     await handleSubmite();
-  };
-
+  }
+ 
   const handleSubmite = async (e) => {
+  
     const newPin = {
       username: currentUsername,
       title,
@@ -205,7 +210,7 @@ function Buisness() {
         "https://hawkerhut-back.onrender.com/api/pins",
         newPin
       );
-
+    
       setCheck(false);
       setNewPlace(null);
     } catch (err) {
@@ -213,10 +218,12 @@ function Buisness() {
     }
     // window.location.reload();
   };
-  ///END OF ON VALUE CHANGE CODE
+///END OF ON VALUE CHANGE CODE
 
-  const handleLogout = () => {
-    //logout function
+
+ 
+
+  const handleLogout = () => { //logout function
     setCurrentUsername(null);
     myStorage.removeItem("user");
   };
@@ -227,51 +234,52 @@ function Buisness() {
   React.useEffect(() => {
     console.log(myStoragee.getItem("Checked"));
   }, []);
-  // const [checked, setChecked] = useState((myStoragee.getItem("Checked")===null)?false:myStorage.getItem("Checked")); //variable for business hours
-  const [checked, setChecked] = useState(myStoragee.getItem("Checked")); //variable for business hours
-  const handleChange1 = async (val) => {
-    ///FUNCTION FOR BUSINESS HOURS
+ // const [checked, setChecked] = useState((myStoragee.getItem("Checked")===null)?false:myStorage.getItem("Checked")); //variable for business hours
+const [checked, setChecked] = useState(myStoragee.getItem("Checked")); //variable for business hours
+  const handleChange1 = async(val) => { ///FUNCTION FOR BUSINESS HOURS
     setChecked(val);
     console.log(val);
     myStoragee.setItem("Checked", val);
     console.log(myStoragee.getItem("Checked"));
-    if (!val) {
+    if (!val)
+    {
       const newPin = {
-        username: currentUsername,
-      };
-      const res = await axios.post(
+        username: currentUsername
+      }
+      const res =await axios.post(
         "https://hawkerhut-back.onrender.com/api/pins/del",
         newPin
       );
       console.log(res);
+      
     }
-    if (!val) {
+    if(!val)
+    {
       window.location.reload();
     }
-    if (val) {
+    if(val)
+    {
       await handleSubmite();
       window.location.reload();
     }
+   
   };
 
-  //FUNCTION TO GET PINS FROM DATABASE ON MAP
-  useEffect(() => {
+  useEffect(() => { //FUNCTION TO GET PINS FROM DATABASE ON MAP
     const getPins = async () => {
       try {
         const allPins = await axios.get(
           "https://hawkerhut-back.onrender.com/api/pins"
         );
         console.log(allPins.data);
-        setPins(() => {
-          const newl = allPins.data;
-          return newl;
-        });
+        setPins(()=>{const newl=allPins.data;
+          return newl;});
       } catch (err) {
         console.log(err);
       }
     };
     getPins();
-  }, [checked]);
+  },[checked]);
 
   return (
     <>
@@ -295,8 +303,7 @@ function Buisness() {
           </select>
         </div>
       </Modal>
-      <BNavbar user={currentUsername} changeTab={changeTab} />
-      {(tab === 0) ?<>
+      <Navbar />
       <div className="parentcon">
         <div className="mapdiv">
           <ReactMapGL
@@ -386,6 +393,7 @@ function Buisness() {
                     }}
                   />
                 </Marker>
+             
               </>
             )}
           </ReactMapGL>
@@ -458,19 +466,18 @@ function Buisness() {
           )}
 
           <div>
-            {checked && currentUsername !== null && (
+            {checked && (currentUsername!==null) && (
               <>
                 <form className="busi_form">
                   <label>Category:</label>
-                  <select
-                    value={title}
-                    onChange={async (e) => {
+                  <select value={title} onChange={async (e) => 
+                    {
                       setTitle(e.target.value);
                       myStorage.setItem("Title", e.target.value);
                       handleSubmit3();
-                    }}
-                  >
-                    <option value="">Options</option>
+                    }}>
+
+                  <option value="">Options</option>
                     <option value="Ice-Cream">Ice-Cream</option>
                     <option value="Vegetables">Vegetables</option>
                     <option value="Cobbler">Cobbler</option>
@@ -503,8 +510,7 @@ function Buisness() {
       <div id="gets">
         <GetStarted lang={lang} data-aos="fade-up" />
       </div>
-      </>
-:(tab===1)?<><BCurrentorders user={currentUsername} /> </>:<><BPastorders user={currentUsername} /></>}
+
       <Footer />
     </>
   );

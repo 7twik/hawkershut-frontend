@@ -107,16 +107,12 @@
   .register{
     background-color: slateblue;
   }
-
-  /* @media (max-width:500px){
-    .mcard{
-      position: relative;
-      display: flex;
-      flex-direction: none;
-      width: auto;
-      z-index: 1000000;
-    }
-    .mapwidth{
-      width: 100vw;
-    }
-  } */
+  .searchbar{
+    color: white;
+    margin-bottom: 5vh;
+    
+  }
+  .searchbtn{
+    background-color: rgb(3, 54, 30);
+    color: white;
+  }

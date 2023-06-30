@@ -1,4 +1,4 @@
-.App {
+/* .App {
   margin: -10px;
   text-align: center;
 }
@@ -59,4 +59,10 @@ html{
   to {
     transform: rotate(360deg);
   }
-} */
+} */ */
+td{
+  color:white;
+}
+th{
+  color:white;
+}

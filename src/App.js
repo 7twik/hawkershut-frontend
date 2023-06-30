@@ -9,11 +9,11 @@ import { Routes, Route, useNavigate } from "react-router-dom"
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./components/ContextProvider/Context";
 import HomePage from "./pages/HomePage/HomePage";
-
+import {EthProvider} from "./contexts/EthContext";
 import Buisness from "./pages/Buisness/Buisness";
 import BReg from "./pages/BReg/BReg";
 import BLog from "./pages/BLog/BLog";
-
+import "./App.css";
 import "./i18n.js"
 import Cate from "./pages/CategoryMajor/Cate";
 function App() {
@@ -62,6 +62,7 @@ function App() {
           <>
             {/* <Navbar /> */}
  {/* en,,hi,ta,ml,ur,mr,bn,gu,te */}
+ <EthProvider>
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -82,7 +83,7 @@ function App() {
               <Route path="/blogin" element={<BLog/>}/>
               <Route path="/category" element={<Cate />} />
             </Routes>
-            
+            </EthProvider>
           </>
 
         ) : <Box sx={{ display: 'flex', justifyContent: "center", alignItems: "center", height: "100vh" }} className="loading" style={{color:"aliceblue"}}>

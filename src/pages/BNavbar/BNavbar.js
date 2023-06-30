@@ -4,7 +4,7 @@ import "./navbare.css";
 //import { bars } from '@fortawesome/free-solid-svg-icons';
   ///////////////////////////////////HOMEPAGE NAVBAR /////////////////
 import { BsFillHddStackFill } from "react-icons/bs";
-const Navbare = (props) => {
+const BNavbar = (props) => {
   const [showNavbar, setShowNavbar] = useState(false);
 
   const handleShowNavbar = () => {
@@ -13,16 +13,15 @@ const Navbare = (props) => {
   function logout() {
     window.location.reload();
   }
-function home(){
+  function home(){
     props.changeTab(0);
-}
-function current(){
-  props.changeTab(1);
-}
-function past(){
-  props.changeTab(2);
-}
-
+  }
+  function current(){
+    props.changeTab(1);
+  }
+  function past(){
+    props.changeTab(2);
+  }
   return (
     <div className="nav-sticky">
       <nav className="navbar">
@@ -41,45 +40,33 @@ function past(){
           <div className="menu-icon" onClick={handleShowNavbar}>
             <BsFillHddStackFill />
           </div>
+          {((props.user==="")||(props.user==null)||(props.user==undefined))?<>
+
+          </>:
           <div className={`nav-elements  ${showNavbar && "active"}`}>
             <ul>
               <li className="hov">Welcome {props.user},</li>
 
-              
-              <li className="hov" onClick={home}>
+              {/* <li className="hov">
+                <NavLink to="/">Home</NavLink>
+              </li> */}
+              <li className="hov pot" onClick={home}>
                 Home
               </li>
-              <li className="hov" onClick={current}>
+              <li className="hov pot" onClick={current}>
                 Current Orders
               </li>
-              <li className="hov" onClick={past}>
+              <li className="hov pot"  onClick={past}>
                 Past Orders
               </li>
-              <li className="hov">
-                <NavLink to="/contact">Contact</NavLink>
-              </li>
-
-              <li className="hov">
-                <div className="abt"
-                  onClick={() => {
-                    const element = document.getElementById("about");
-                    element.scrollIntoView();
-                  }}
-                >
-                  About
-                </div>
-              </li>
-              <li className="hov">
-                <NavLink to="/" onClick={props.logout}>
-                  Logout
-                </NavLink>
-              </li>
+             
+              
             </ul>
-          </div>
+          </div>}
         </div>
       </nav>
     </div>
   );
 };
 
-export default Navbare;
+export default BNavbar;

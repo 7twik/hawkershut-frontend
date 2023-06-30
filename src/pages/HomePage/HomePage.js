@@ -9,6 +9,12 @@ import Map from "../Map/Map"
 import Login from '../../components/Login';
 import Navbare from '../../components/Navbare/Navbare';
 import About from '../../components/About/About';
+import { changeLanguage } from 'i18next';
+import useEth from "../../contexts/EthContext/useEth"; 
+import Download from "../Download/Download";
+import WrongNetwork from "../WrongNetwork/WrongNetwork";
+import CCurrentorders from '../CCurrentorders/CCurrentorders';
+import CPastorders from '../CPastorders/CPastorders';
 const HomePage = () => {
   const [success,setS]=React.useState(false);
   const [note,setNotes]=React.useState();
@@ -33,10 +39,27 @@ const HomePage = () => {
     myStorage.removeItem("Customeruser");
     window.location.reload();
   };
+  const [tab,setTab]=React.useState(0);
+  function changeTab(data){
+    setTab(data);
+  }
+  const {ethereum}=window;
+  const { state } = useEth();
+  const [download, setDownload] = React.useState(false);
+  React.useEffect(() => {
+    if(ethereum)
+    {
+      setDownload(true);
+    }
+  });
   return (
+    <>{(download)?<>
     <>{(success)?
     <><div className='Appo' style={{overflowX:"hidden"}}>
-    <Navbare user={currentUsername} logout={handleLogout}/>
+    {(!state.contract)? <WrongNetwork />:<></>}
+    <Navbare user={currentUsername} logout={handleLogout} changeTab={changeTab} />
+    {(tab===0)?
+    <>
         <header className="App-header">
         <div className="body">
           <section className="contain">
@@ -80,8 +103,9 @@ const HomePage = () => {
           </section>
         </div>
       </header>
-      <Map />
-      <Categories />
+      <Map user={currentUsername} />
+      <Categories /></>
+    :(tab===1)?<> <CCurrentorders user={currentUsername} /> </>:<><CPastorders user={currentUsername} /></>}
       <About />
       <div className="Footer">
         <Footer />
@@ -91,6 +115,7 @@ const HomePage = () => {
     setCurrentUsername={setCurrentUsername}
     myStorage={myStorage}
     />}</>
+    </>:<><Download /></>}</>
   )
 }
 
