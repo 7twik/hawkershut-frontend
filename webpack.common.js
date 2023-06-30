@@ -5,12 +5,12 @@ const EslintWebpackPlugin = require("eslint-webpack-plugin");
 const extensions = [".js", ".jsx"];
 
 module.exports = {
-  mode:  "development",
   entry: "./src/index.js",
 //added for dev server
   output: {
     path: path.resolve(__dirname, "build"),
     publicPath: '/',
+    clean: true,
   },
   resolve: { extensions },
   devServer: {
