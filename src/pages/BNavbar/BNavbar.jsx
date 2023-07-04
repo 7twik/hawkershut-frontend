@@ -1,0 +1,72 @@
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import "./navbare.css";
+//import { bars } from '@fortawesome/free-solid-svg-icons';
+  ///////////////////////////////////HOMEPAGE NAVBAR /////////////////
+import { BsFillHddStackFill } from "react-icons/bs";
+const BNavbar = (props) => {
+  const [showNavbar, setShowNavbar] = useState(false);
+
+  const handleShowNavbar = () => {
+    setShowNavbar(!showNavbar);
+  };
+  function logout() {
+    window.location.reload();
+  }
+  function home(){
+    props.changeTab(0);
+  }
+  function current(){
+    props.changeTab(1);
+  }
+  function past(){
+    props.changeTab(2);
+  }
+  return (
+    <div className="nav-sticky">
+      <nav className="navbar">
+        <div className="container">
+          <div className="logo">
+            <NavLink to="/">
+              <img
+                className="logN"
+                src="https://res.cloudinary.com/dqy7m95yz/image/upload/v1678477011/logo_b_w_3_hcngve.png"
+                // src="https://res.cloudinary.com/dqy7m95yz/image/upload/v1677352785/icon2_1_pdxuih.png"
+                alt="nf"
+              />
+            </NavLink>
+            {/* <img className='logN' src="https://res.cloudinary.com/dcyfkgtgv/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1672838305/Dark_Beige_Modern_Real_Estate_Building_Logo-removebg-preview_xx8tar.jpg" alt="nf" /> */}
+          </div>
+          <div className="menu-icon" onClick={handleShowNavbar}>
+            <BsFillHddStackFill />
+          </div>
+          {((props.user==="")||(props.user==null)||(props.user==undefined))?<>
+
+          </>:
+          <div className={`nav-elements  ${showNavbar && "active"}`}>
+            <ul>
+              <li className="hov">Welcome {props.user},</li>
+
+              {/* <li className="hov">
+                <NavLink to="/">Home</NavLink>
+              </li> */}
+              <li className="hov pot" onClick={home}>
+                Home
+              </li>
+              <li className="hov pot" onClick={current}>
+                Current Orders
+              </li>
+              <li className="hov pot"  onClick={past}>
+                Past Orders
+              </li>
+             
+              
+            </ul>
+          </div>}
+        </div>
+      </nav>
+    </div>
+  );
+};
+
+export default BNavbar;

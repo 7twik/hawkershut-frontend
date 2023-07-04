@@ -1,0 +1,119 @@
+/* .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    margin-left: 8px;
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button.edit-btn {
+    background-color: #2196f3;
+  }
+  
+  button.delete-btn {
+    background-color: #f44336;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  li input[type="text"] {
+    flex: 1;
+    margin-right: 8px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  li button.edit-btn {
+    margin-right: 8px;
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  li button.delete-btn {
+    margin-left: 8px;
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 600px) {
+    form {
+      flex-direction: column;
+    }
+  
+    button {
+      margin-left: 0;
+      margin-top: 8px;
+    }
+  
+    li {
+      flex-direction: column;
+    }
+  
+    li input[type="text"] {
+      margin-right: 0;
+      margin-bottom: 8px;
+    }
+  
+    li button.edit-btn {
+      margin-right: 0;
+      margin-bottom: 8px;
+    }
+  
+    li button.delete-btn {
+      margin-left: auto;
+      margin-top: 8px;
+    }
+  
+    ul {
+      flex-direction: column;
+    }
+  }
+   */

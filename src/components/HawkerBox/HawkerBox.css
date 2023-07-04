@@ -1,0 +1,13 @@
+.hawkerbox{
+    width: 30vw;
+    display:flex;
+    padding: 5px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    background-color: white;
+}
+.topbox1{
+    display:flex;
+    justify-content: space-between;
+}

@@ -49,6 +49,7 @@
     "react-scripts": "5.0.1",
     "react-scroll-motion": "^0.3.2",
     "react-select": "^5.7.0",
+    "react-super-responsive-table": "^5.2.1",
     "react-switch": "^7.0.0",
     "react-tabs": "^6.0.0",
     "react-toastify": "^9.1.1",
@@ -61,37 +62,20 @@
     "web3": "^1.8.2"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.22.5",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
-    "babel-loader": "^9.1.2",
-    "css-loader": "^6.7.3",
     "eslint": "^8.38.0",
-    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "eslint-webpack-plugin": "^4.0.0",
-    "html-webpack-plugin": "^5.5.3",
-    "style-loader": "^3.3.3",
-    "vite": "^4.3.9",
-    "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-middleware": "^1.12.0",
-    "webpack-merge": "^5.7.3",
-    "webpack-dev-server": "^4.15.1"
+    "vite": "^4.3.9"
   },
   "scripts": {
-    "start": "webpack serve --config webpack.dev.js",
+    "dev": "vite",
+    "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "build": "webpack build --config webpack.prod.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "webpack": "webpack",
-    "webpack-dev-server": "webpack-dev-server",
-    "dev": "webpack-dev-server --open --config webpack.dev.config.js",
-    "prod": "npm run webpack -- --env mode=production"
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [

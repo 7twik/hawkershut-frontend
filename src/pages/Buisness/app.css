@@ -45,18 +45,18 @@ label {
   font-size: 12px;
 }
 
-.busi_form {
+.busi_forms {
   margin-top: 4vh;
-  padding: 1vh 1vw;
-  width: 250px;
-  height: 250px;
+  padding: 2vh 1.5vw;
+  width: 26vw;
+  height:55vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between; 
   color: rgb(181, 28, 28);
   background-color: rgb(99, 96, 96);
+  border-radius: 5px;
 }
-
 input {
   border: none;
   border-bottom: 1px solid gray;
@@ -167,6 +167,10 @@ textarea {
   }
   .mapwidth{
     width: 90vw !important;
+  }
+  .busi_forms{
+    width: 80vw !important;
+    height: 60vh !important;
   }
 }
 
