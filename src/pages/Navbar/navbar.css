@@ -91,6 +91,9 @@ a:hover{
 }
 
 @media (max-width: 1000px) {
+  .nav-elements{
+    margin-top: 8vw;
+  }
   .nav-elements ul li:not(:last-child) {
     margin-right: 30px;
   }

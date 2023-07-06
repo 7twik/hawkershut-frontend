@@ -1,10 +1,9 @@
 import "./app.css";
-import React, { useRef } from "react";
+import React from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { useEffect, useState } from "react";
-import { Label, Room, Star, StarBorder } from "@material-ui/icons";
-import axios, { all } from "axios";
-import { format } from "timeago.js";
+import { Room } from "@material-ui/icons";
+import axios from "axios";
 import Register from "../Register";
 import Login from "../Login";
 import Footer from "../Footer/Footer";
@@ -18,7 +17,8 @@ import "aos/dist/aos.css";
 import ReactSwitch from "react-switch";
 import BPastorders from "../BPastorders/BPastorders";
 import BCurrentorders from "../BCurrentorders/BCurrentorders";
-import Button from "react-bootstrap/esm/Button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import TodoList from "../../components/todo/TodoList";
 // Contains the value and text for the options
 const languages = [
@@ -40,16 +40,16 @@ function Buisness() {
   const [todoList, setTodoList] = useState(
     myStoragee.getItem("todos") ? JSON.parse(myStoragee.getItem("todos")) : []
   );
-  const todoChange=(add)=>{
+  const todoChange = (add) => {
     let newTodoList = todoList;
     newTodoList.push(add);
     setTodoList(newTodoList);
-  }
+  };
 
-  const todoDelete=(id)=>{
+  const todoDelete = (id) => {
     const updatedTodos = todoList.filter((_, i) => i !== id);
     setTodoList(updatedTodos);
-  }
+  };
   const [currentLang, setCurrentLang] = React.useState(
     myStoragee.getItem("Language")
   );
@@ -72,24 +72,29 @@ function Buisness() {
   React.useEffect(() => {
     setTimeout(myGreeting, 5000);
   }, []);
-  const [open, setOpen] = React.useState(false);
 
+  const [open, setOpen] = React.useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
+  const [open1, setOpen1] = React.useState(false);
+  const onOpenModal1 = () => setOpen1(true);
+  const onCloseModal1 = () => setOpen1(false);
+
+  const [open2, setOpen2] = React.useState(false);
+  const onOpenModal2 = () => setOpen2(true);
+  const onCloseModal2 = () => setOpen2(false);
 
   const myStorage = window.localStorage;
   const [currentUsername, setCurrentUsername] = useState(
     myStorage.getItem("user")
   );
 
-  const [currentTitle, setCurrentTitle] = useState(myStorage.getItem("title"));
-  const [currentDesc, setCurrentDesc] = useState(myStorage.getItem("Desc"));
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
   const [title, setTitle] = useState(myStorage.getItem("Title"));
   const [desc, setDesc] = useState(myStorage.getItem("Desc"));
-  const [star, setStar] = useState(0);
   const [check, setCheck] = useState(false);
   const [viewport, setViewport] = useState({
     latitude: 47.040182,
@@ -142,6 +147,7 @@ function Buisness() {
       long: long,
       items: todoList,
     };
+    // console.log(newPin);
     try {
       //console.log(newPin);
       const res = await axios.post(
@@ -293,7 +299,7 @@ function Buisness() {
         const allPins = await axios.get(
           "https://hawkerhut-back.onrender.com/api/pins"
         );
-        console.log(allPins.data);
+        // console.log(allPins.data);
         setPins(() => {
           const newl = allPins.data;
           return newl;
@@ -303,11 +309,13 @@ function Buisness() {
       }
     };
     getPins();
-  }, [checked]);
+  });
+  // [checked, reloadVar]
+  const notify = () => toast("Updated!");
 
   const handleFormSubmit = async (e) => {
-    // e.preventDefault();
     // console.log("Hey I am clicked!");
+    e.preventDefault();
     const newPin = {
       username: currentUsername,
       title,
@@ -316,20 +324,44 @@ function Buisness() {
       long: long1,
       items: todoList,
     };
-    try {
-      //console.log(newPin);
-      const res = await axios.post(
-        "https://hawkerhut-back.onrender.com/api/pins",
-        // "http://localhost:8009/api/pins",
-        newPin
-      );
+    notify();
+    //console.log(newPin);
+    await axios.post(
+      "https://hawkerhut-back.onrender.com/api/pins",
+      // "http://localhost:8009/api/pins",
+      newPin
+    );
+    window.location.reload();
+    setCheck(false);
+    setNewPlace(null);
+    console.log("calledme before");
 
-      setCheck(false);
-      setNewPlace(null);
-    } catch (err) {
-      console.log(err);
-    }
+    notify();
+    calledme();
   };
+
+  const [noteIns, setNoteIns] = React.useState([]);
+  const apihawker = async () => {
+    const options = {
+      method: "GET",
+      url: "https://hawkerhut-back.onrender.com/api/web3/hawker",
+      params: { HUser: currentUsername },
+    };
+    axios
+      .request(options)
+      .then((response) => {
+        console.log(response.data);
+        // setLength(response.data.length);
+        response.data.reverse();
+        setNoteIns(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  React.useEffect(() => {
+    apihawker();
+  }, [currentUsername]);
   return (
     <>
       <Modal
@@ -352,7 +384,39 @@ function Buisness() {
           </select>
         </div>
       </Modal>
-      <BNavbar user={currentUsername} changeTab={changeTab} />
+      <Modal
+        className="mode"
+        open={open1}
+        onClose={onCloseModal1}
+        closeOnOverlayClick={false}
+        center={true}
+      >
+        <div className="loginn">
+          <Login
+            setShowLogin={onCloseModal1}
+            setCurrentUsername={setCurrentUsername}
+            myStorage={myStorage}
+          />
+        </div>
+      </Modal>
+      <Modal
+        className="mode"
+        open={open2}
+        onClose={onCloseModal2}
+        closeOnOverlayClick={false}
+        center={true}
+      >
+        <div className="reginn">
+          <Register setShowRegister={onCloseModal2} />
+        </div>
+      </Modal>
+      <ToastContainer />
+
+      <BNavbar
+        user={currentUsername}
+        changeTab={changeTab}
+        num={noteIns.length}
+      />
       {tab === 0 ? (
         <>
           <div className="parentcon">
@@ -433,6 +497,50 @@ function Buisness() {
                     )}
                   </>
                 ))}
+
+                {/* added code */}
+
+                {noteIns.map((p) => (
+                  <>
+                    <Marker
+                      latitude={p.Lat}
+                      longitude={p.Long}
+                      offsetLeft={-3.5 * viewport.zoom}
+                      offsetTop={-7 * viewport.zoom}
+                    >
+                      <Room
+                        style={{
+                          fontSize: 5 * viewport.zoom,
+                          color: "green",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleMarkerClick(p._id, p.Lat, p.Long)}
+                      />
+                    </Marker>
+                    {p._id === currentPlaceId && (
+                      <Popup
+                        key={p._id}
+                        latitude={p.Lat}
+                        longitude={p.Long}
+                        closeButton={true}
+                        closeOnClick={false}
+                        onClose={() => setCurrentPlaceId(null)}
+                        anchor="left"
+                      >
+                        <div className="card">
+                          <label>Customer name:</label>
+                          <h4 className="place">{p.CUser}</h4>
+                          <label>Message:</label>
+                          <p className="desc">{p.Message}</p>
+                          <label>Your Stage</label>
+                          <p className="username">{p.HawkerStage} </p>
+                        </div>
+                      </Popup>
+                    )}
+                  </>
+                ))}
+
+                {/* added code */}
                 {check && (
                   <>
                     <Marker
@@ -477,12 +585,12 @@ function Buisness() {
                     <button
                       className="btn_start"
                       style={{
-                        background: "grey",
-                        color: "black",
+                        background: "purple",
+                        color: "white",
                         borderRadius: "7px",
                       }}
                     >
-                      Business Hours
+                      Business Hours &nbsp;
                       <ReactSwitch checked={checked} onChange={handleChange1} />
                     </button>
                   </div>
@@ -499,7 +607,7 @@ function Buisness() {
                     <div className="btn_div">
                       <button
                         className="btn_start login"
-                        onClick={() => setShowLogin(true)}
+                        onClick={() => onOpenModal1()}
                       >
                         {t("b2")}
                       </button>
@@ -507,7 +615,7 @@ function Buisness() {
                     <div className="btn_div">
                       <button
                         className="btn_start register"
-                        onClick={() => setShowRegister(true)}
+                        onClick={() => onOpenModal2()}
                       >
                         {t("b3")}
                       </button>
@@ -515,19 +623,11 @@ function Buisness() {
                   </>
                 )}
               </div>
-              {showRegister && <Register setShowRegister={setShowRegister} />}
-              {showLogin && (
-                <Login
-                  setShowLogin={setShowLogin}
-                  setCurrentUsername={setCurrentUsername}
-                  myStorage={myStorage}
-                />
-              )}
 
               <div>
                 {checked && currentUsername !== null && (
                   <>
-                    <form className="busi_forms">
+                    <div className="busi_forms">
                       <label>Category:</label>
                       <select
                         value={title}
@@ -566,7 +666,11 @@ function Buisness() {
                   <textarea
                     placeholder="What items are you selling" /> */}
                       <label>Current Items</label>
-                      <TodoList setCurrentUsername={currentUsername} todoChange={todoChange} todoDelete={todoDelete}/>
+                      <TodoList
+                        setCurrentUsername={currentUsername}
+                        todoChange={todoChange}
+                        todoDelete={todoDelete}
+                      />
                       <button
                         className="btn_start"
                         onClick={(e) => handleFormSubmit(e)}
@@ -579,7 +683,7 @@ function Buisness() {
                       >
                         Submit
                       </button>
-                    </form>
+                    </div>
                   </>
                 )}
               </div>

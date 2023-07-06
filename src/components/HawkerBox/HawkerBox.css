@@ -5,9 +5,25 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
-    background-color: white;
+    background-color: rgb(198, 196, 196);
+    /* overflow-y: scroll; */
+    
 }
 .topbox1{
     display:flex;
     justify-content: space-between;
+}
+@media screen and (max-width: 768px) {
+    .hawkerbox{
+        width: 80vw;
+        padding: 10px;
+        /* margin-right: 5vw; */
+    }
+}
+@media (min-width:850px){
+    .hawkerbox{
+        padding-left: 3.5vw;
+        padding-right: 3.5vw;
+        padding-top: 2vh;
+    }
 }

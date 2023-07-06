@@ -23,7 +23,7 @@ body {
   text-shadow: 1px 1px purple;
   font-size: 42px;
   margin-top: -2vh;
-  background-color: #20262E;
+  background-color: #000308;
   /* background-image: url("https://www.transparenttextures.com/patterns/debut-light.png"); */
 }
 .logN{
@@ -35,7 +35,7 @@ body {
 }
 .navbar {
   height: 13.71951219512195vh;
-  background-color: #20262E;
+  background-color: #000308;
   /* background-image: url("https://www.transparenttextures.com/patterns/debut-light.png"); */
   position: relative;
   z-index: 2;
@@ -44,11 +44,12 @@ body {
 
 .menu-icon {
   display: none;
-  color:#000000;
+  color:#000308;
   width: 15vh;
 }
 .nav-sticky{
   position: sticky;
+  top: 0;
 }
 
 .nav-elements ul {
@@ -70,7 +71,7 @@ body {
   text-decoration: none;
 }
 .hov:hover{
-  color:#950101;
+  color:#1dbea6 !important;
 }
 .nav-elements ul a.active {
   color: #EEE9DA;
@@ -96,7 +97,7 @@ a:hover{
     margin-right: 30px;
   }
   .navbar {
-    background-color: #20262E;
+    background-color: #000308 !important;
     position: relative;
     z-index: 1;
   }
@@ -106,6 +107,7 @@ a:hover{
     padding: 0 !important;
     margin-right: -12vw;
     font-size: 4vw;
+    color: white;
   }
   .menu-icon {
     display: inline-block;
@@ -115,7 +117,7 @@ a:hover{
   }
   .navbar {
     height: 90px;
-    background-color: #20262E;
+    background-color: #000308;
     position: relative;
   }
 
@@ -123,7 +125,7 @@ a:hover{
     position: absolute;
     right: 0;
     top: 60px;
-    background-color: #20262E;
+    background-color: #000308;
     /* background-image: url("https://www.transparenttextures.com/patterns/debut-light.png"); */
     width: 0px;
     height: calc(100vh - 60px);

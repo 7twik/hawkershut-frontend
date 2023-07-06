@@ -1,4 +1,4 @@
-import { Cancel, Room } from "@material-ui/icons";
+// import { Cancel, Room } from "@material-ui/icons";
 import axios from "axios";
 import { useRef, useState } from "react";
 import "./login.css";
@@ -18,7 +18,7 @@ export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
       const res = await axios.post("https://hawkerhut-back.onrender.com/api/users/login", user);
       setCurrentUsername(res.data.username);
       myStorage.setItem('user', res.data.username);
-      setShowLogin(false)
+      setShowLogin();
     } catch (err) {
       setError(true);
     }
@@ -26,10 +26,6 @@ export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
 
   return (
     <div className="loginContainer">
-      {/* <div className="logo"> */}
-        {/* <Room className="logoIcon" />
-        {/* <span>LamaPin</span> */}
-      {/* </div> */}
       <form onSubmit={handleSubmit}>
         <input autoFocus placeholder="username" ref={usernameRef} />
         <input
@@ -43,7 +39,6 @@ export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
         </button>
         {error && <span className="failure">Something went wrong!</span>}
       </form>
-      <Cancel className="loginCancel" onClick={() => setShowLogin(false)} />
     </div>
   );
 }

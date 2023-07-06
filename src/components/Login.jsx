@@ -1,3 +1,4 @@
+/////////////////////////////Customer login//////////////////////////////////////////////////
 // eslint-disable-next-line
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -48,60 +49,7 @@ const Login = ({ setShowLogin, setCurrentUsername,myStorage }) => {
   return (
     <>
       <Navbar />
-      {/* <div className="parentdiv">*/}
-      {/* <div className="divform1"> 
-          <section className="sectionab">
-            <div className="form_data logiiin">
-              <div className="form_heading">
-                <h1 className="topformm">Welcome Back, Log In</h1>
-                <p className="topformm2">Hi, we are glad that you are back.</p>
-              </div>
-
-              <form>
-                <div className="form_input">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    value={inpval.email}
-                    onChange={setVal}
-                    name="email"
-                    id="email"
-                    placeholder="Enter Your Email Address"
-                  />
-                </div>
-                <div className="form_input">
-                  <label htmlFor="password">Password</label>
-                  <div className="two">
-                    <input
-                      type={!passShow ? "password" : "text"}
-                      onChange={setVal}
-                      value={inpval.password}
-                      name="password"
-                      id="password"
-                      placeholder="Enter Your password"
-                    />
-                    <div
-                      className="showpass"
-                      onClick={() => setPassShow(!passShow)}
-                    >
-                      {!passShow ? "Show" : "Hide"}
-                    </div>
-                  </div>
-                </div>
-
-                <button className="btn" onClick={loginuser}>
-                  Login
-                </button>
-                <p className="topformm2">
-                  Don't have an Account?{" "}
-                  <NavLink  className="topformm2" to="/register">Sign Up</NavLink>{" "}
-                </p>
-              </form>
-              <ToastContainer />
-            </div>
-          </section>
-         </div> */}
-      {/* </div> */}
+    
       <div className="loginOutDiv">
         <section className="login-section">
           <div className="form-login">

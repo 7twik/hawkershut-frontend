@@ -2,7 +2,6 @@ import React,{useState,useEffect} from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import axios from 'axios';
-import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
@@ -10,6 +9,9 @@ import Web3 from "web3";
 import { Note } from "@material-ui/icons";
 import HawkersHut from "../../contracts/HawkerHut.json";
 import { parse } from "date-fns";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import '../Admin/Admin.css';
 const CCurrentorders = (props) => {
     const [customer, setCustomer] = React.useState(props.user);
     const orderRef = React.useRef();
@@ -58,10 +60,10 @@ const CCurrentorders = (props) => {
     contract: null,
   });
   useEffect(() => {
-    const provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:8545");
+   
 
     async function template() {
-      const web3 = new Web3(provider);
+      const web3 = new Web3(Web3.givenProvider||"ws://localhost:8545");
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = HawkersHut.networks[networkId];
       const contract = new web3.eth.Contract(
@@ -71,7 +73,7 @@ const CCurrentorders = (props) => {
       console.log(contract);
       setState({ web3: web3, contract: contract });
     }
-    provider && template();
+    template();
   }, []);
 
 
@@ -267,58 +269,58 @@ const CCurrentorders = (props) => {
 
   return (
     <div style={{color:"white"}}>
-    <Modal
-        className="mode"
-        open={open}
-        onClose={onCloseModal}
-        closeOnOverlayClick={false}
-        center={true}
-      >
-        <div className="moddd">
-          <div className="mod-top">
-            You can choose to pay partially or fully
-          </div>
-          <br />
-          <br />
-          <Button variant="secondary" onClick={partialPayment}>Partial Payment</Button>{' '}
-          <Button variant="primary" onClick={fullPayment}>Full Payment</Button>{' '}
-          </div>
-      </Modal>
+            <Modal
+                className="mode"
+                open={open}
+                onClose={onCloseModal}
+                closeOnOverlayClick={false}
+                center={true}
+              >
+                <div className="moddd">
+                  <div className="mod-top">
+                    You can choose to pay partially or fully
+                  </div>
+                  <br />
+                  <br />
+                  <Button variant="secondary" onClick={partialPayment}>Partial Payment</Button>{' '}
+                  <Button variant="primary" onClick={fullPayment}>Full Payment</Button>{' '}
+                  </div>
+              </Modal>
     Your orders:
           <br />
           <br />
           <>
             {(NoteIns == null|| NoteIns==[] || NoteIns==undefined || NoteIns.length==0) ? (
               <div>No Orders Currently</div>
-            ) : (
-              NoteIns.map((note, index) => {
-                return <div key={index}>
-                  <Table striped bordered hover>
-                      <thead>
-                        <tr>
-                          <th>Hawker Name</th>
-                          <th>Requirement/message</th>
-                          <th>Time</th>
-                          <th>Hawker Stage</th>
-                          <th>Pay</th>
-                          <th>Cancel</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{note.HUser}</td>
-                          <td>{note.Message}</td>
-                          <td>{note.updatedAt}</td>
-                          <td>{note.HawkerStage}</td>
-                          <td><Button variant="success" onClick={event =>customerAccept(event,note._id,note.Hash)}>Pay</Button>{' '}</td>
-                          <td><Button variant="danger" onClick={event =>customerDeny(event,note._id,note.Hash)}>Cancel</Button>{' '}</td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                </div>;
-              })
-            )}
-          </></div>
+            ) : (<>
+             <Table striped bordered hover>
+                      <Thead>
+                        <Tr>
+                          <Th>Hawker Name</Th>
+                          <Th>Message</Th>
+                          <Th>Time</Th>
+                          <Th>Hawker Stage</Th>
+                          <Th>Pay</Th>
+                          <Th>Cancel</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+              {NoteIns.map((note, index) => {
+                return  <Tr key={index}>
+                          <Td>{note.HUser}</Td>
+                          <Td>{note.Message}</Td>
+                          <Td>{note.updatedAt}</Td>
+                          <Td>{note.HawkerStage}</Td>
+                          <Td>{(note.HawkerStage==="Waiting")?<>
+                            Hawker has not accepted your order yet
+                          </>:<Button variant="success" onClick={event =>customerAccept(event,note._id,note.Hash)}>Pay</Button>}{' '}</Td>
+                          <Td><Button variant="danger" onClick={event =>customerDeny(event,note._id,note.Hash)}>Cancel</Button>{' '}</Td>
+                        </Tr>
+                      })}
+                      </Tbody>
+                    </Table>                
+                </>)}
+              </></div>
   )
 }
 

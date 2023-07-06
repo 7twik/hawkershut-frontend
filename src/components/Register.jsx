@@ -53,92 +53,7 @@ const Register = () => {
   return (
     <>
     <Navbar />
-    {/* <div className="divform1">
-    <section className="sectionab reg">
-      
-      <div className="form_data logiiin">
-        <div className="form_heading">
-          <h1 className="topformm">Sign Up</h1>
-          <p style={{ textAlign: "center" }}>
-            We are glad that you will be using HawkersHut to manage <br />
-            your tasks! We hope that you will get like it.
-          </p>
-        </div>
-        
-        <form>
-          <div className="form_input">
-            <label htmlFor="fname">Name</label>
-            <input
-              type="text"
-              onChange={setVal}
-              value={inpval.fname}
-              name="fname"
-              id="fname"
-              placeholder="Enter Your Name"
-            />
-          </div>
-          <div className="form_input">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              onChange={setVal}
-              value={inpval.email}
-              name="email"
-              id="email"
-              placeholder="Enter Your Email Address"
-            />
-          </div>
-          <div className="form_input">
-            <label htmlFor="password">Password</label>
-            <div className="two">
-              <input
-                type={!passShow ? "password" : "text"}
-                value={inpval.password}
-                onChange={setVal}
-                name="password"
-                id="password"
-                placeholder="Enter Your password"
-              />
-              <div
-                className="showpass"
-                onClick={() => setPassShow(!passShow)}
-              >
-                {!passShow ? "Show" : "Hide"}
-              </div>
-            </div>
-          </div>
-
-          <div className="form_input">
-            <label htmlFor="password">Confirm Password</label>
-            <div className="two">
-              <input
-                type={!cpassShow ? "password" : "text"}
-                value={inpval.cpassword}
-                onChange={setVal}
-                name="cpassword"
-                id="cpassword"
-                placeholder="Confirm password"
-              />
-              <div
-                className="showpass"
-                onClick={() => setCPassShow(!cpassShow)}
-              >
-                {!cpassShow ? "Show" : "Hide"}
-              </div>
-            </div>
-          </div>
-
-          <button className="btn" onClick={addUserdata}>
-            Sign Up
-          </button>
-          <p>
-            Already have an account? <NavLink to="/">Log In</NavLink>
-          </p>
-        </form>
-        <ToastContainer />
-      </div>
-    </section>
-    </div> */}
+  
      
     <div className="signupOutDiv">
         <section className="signup-section">
@@ -186,18 +101,6 @@ const Register = () => {
                   id="password"
                 />
               </div>
-              {/* <div className="signup-form-input">
-              <label className="signup-label" htmlFor="cpassword">Confirm Password</label>
-                <input
-                className="signup-input"
-                  placeholder="Confirm your password..."
-                  type="password"
-                  value={inpval.cpassword}
-                  onChange={setVal}
-                  name="cpassword"
-                  id="cpassword"
-                />
-              </div> */}
               <button className="signup-btn" onClick={addUserdata}>Register</button>   
               {success && (
           <span className="success">Successfull. You can login now!</span>
@@ -205,7 +108,7 @@ const Register = () => {
         {error && <span className="failure">Something went wrong!</span>}       
               <p className="topform123">
                   Already have an Account?{" "}
-                  <NavLink  to="/login">Login</NavLink>{" "}
+                  <NavLink  to="/">Login</NavLink>{" "}
                 </p>
             </form>
             <ToastContainer />

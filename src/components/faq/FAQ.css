@@ -1,0 +1,61 @@
+.faq-container {
+    background-color: #cad1d2;
+    background-image: url("https://www.transparenttextures.com/patterns/diagmonds.png");
+    height: 100vh;
+}
+
+.faq {
+    color: rgb(233, 236, 236);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+    font-size: 8vh;
+    font-weight: 1000;
+}
+
+.faq-tab-container {
+    display: flex;
+    height: 60vh;
+    justify-content: center;
+}
+
+.faq-left,
+.faq-right {
+    margin: 10vh;
+}
+
+.acc {
+    width: 40vw;
+    background-color: beige;
+}
+
+@media (max-width:850px) {
+    .faq {
+        font-size: 3vh;
+    }
+
+    .faq-tab-container {
+        flex-direction: column;
+    }
+
+    .faq-tab-container {
+        align-items: center;
+    }
+
+    .faq-left,
+    .faq-right {
+        margin: 0vh;
+    }
+
+    .acc {
+        width: 70vw;
+    }
+
+
+}
+
+.accordian {
+    --bs-accordion-color: #212529;
+    --bs-accordion-bg: #c5c0c0;
+}

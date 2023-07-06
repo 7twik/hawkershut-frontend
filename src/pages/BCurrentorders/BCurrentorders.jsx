@@ -1,16 +1,17 @@
 import axios from "axios";
 import React,{useState,useEffect} from "react";
-import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Web3 from "web3";
 import Download from "../Download/Download";
 import WrongNetwork from "../WrongNetwork/WrongNetwork";
 import HawkersHut from "../../contracts/HawkerHut.json";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import '../Admin/Admin.css';
 const BCurrentorders = (props) => {
-    const [length, setLength] = React.useState(0);
+   
     const [hawker, setHawker] = React.useState(props.user);
     const [NoteIns, setNoteIns] = React.useState(null);
-    const [NoteIns2, setNoteIns2] = React.useState(null);
     const [per, Sper] = React.useState({ lat: 0, long: 0 });
     const {ethereum} = window;
 
@@ -23,10 +24,10 @@ const BCurrentorders = (props) => {
         contract: null,
       });
       useEffect(() => {
-        const provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:8545");
+       
     
         async function template() {
-          const web3 = new Web3(provider);
+          const web3 = new Web3(Web3.givenProvider||"ws://localhost:8545");
           const networkId = await web3.eth.net.getId();
           const deployedNetwork = HawkersHut.networks[networkId];
           const contract = new web3.eth.Contract(
@@ -36,7 +37,7 @@ const BCurrentorders = (props) => {
           console.log(contract);
           setState({ web3: web3, contract: contract });
         }
-        provider && template();
+       template();
       }, []);
 
 
@@ -72,8 +73,7 @@ const BCurrentorders = (props) => {
       axios
         .request(options)
         .then((response) => {
-          console.log(response.data)
-          setLength(response.data.length);
+          console.log(response.data);
           response.data.reverse();
           setNoteIns(response.data);
         })
@@ -176,29 +176,29 @@ const BCurrentorders = (props) => {
           <br />
           {(!state.contract)? <WrongNetwork />:<></>}
           <div>
-            {(NoteIns === null || NoteIns === []) ? (
+            {(NoteIns === null ||NoteIns.length===0) ? (
               <div>No Orders Currently</div>
             ) : (
               NoteIns.map((note, index) => {
                 return <div key={index}>
                   <Table striped bordered hover style={{color:"white"}}>
-                      <thead>
-                        <tr>
-                          <th>Customer Name</th>
-                          <th>Loc</th>
-                          <th>Requirement/message</th>
-                          <th>Time</th>
-                          <th>Accept</th>
-                          <th>Deny</th>
-                        </tr>
-                      </thead>
-                      <tbody style={{color:"white"}}>
-                        <tr style={{color:"white"}}>
-                          <td style={{color:"white"}}>{note.CUser}</td>
-                          <td style={{color:"white"}}>lat:{note.Lat} | long:{note.Long}</td>
-                          <td style={{color:"white"}}>{note.Message}</td>
-                          <td style={{color:"white"}}>{note.updatedAt}</td>
-                          <td style={{color:"white"}}>{(note.HawkerStage==="Waiting")?
+                      <Thead>
+                        <Tr>
+                          <Th>Customer Name</Th>
+                          <Th>Loc</Th>
+                          <Th>Requirement/message</Th>
+                          <Th>Time</Th>
+                          <Th>Accept</Th>
+                          <Th>Deny</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody style={{color:"white"}}>
+                        <Tr style={{color:"white"}}>
+                          <Td style={{color:"white"}}>{note.CUser}</Td>
+                          <Td style={{color:"white"}}>lat:{note.Lat} | long:{note.Long}</Td>
+                          <Td style={{color:"white"}}>{note.Message}</Td>
+                          <Td style={{color:"white"}}>{note.updatedAt}</Td>
+                          <Td style={{color:"white"}}>{(note.HawkerStage==="Waiting")?
                             <Button variant="success" onClick={event => hawkerAccept(event,note._id,note.Hash)}>Accept</Button>:
                             (note.HawkerStage==="Accepted")?
                             <Button variant="success"  onClick={event => hawkerReach(event,note._id,note.Lat,note.Long,note.Hash)}> Reached</Button>:
@@ -206,10 +206,10 @@ const BCurrentorders = (props) => {
                             <>Please contact {note.CPhone}</>:
                             <></>
                             }
-                          </td>
-                          <td style={{color:"white"}}><Button variant="danger" onClick={event =>hawkerDeny(event,note._id,note.Hash)}>Cancel</Button>{' '}</td>
-                        </tr>
-                      </tbody>
+                          </Td>
+                          <Td style={{color:"white"}}><Button variant="danger" onClick={event =>hawkerDeny(event,note._id,note.Hash)}>Cancel</Button>{' '}</Td>
+                        </Tr>
+                      </Tbody>
                     </Table>
                 </div>;
               })

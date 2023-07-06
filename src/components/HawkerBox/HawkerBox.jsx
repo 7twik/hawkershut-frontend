@@ -4,19 +4,24 @@ const HawkerBox = (props) => {
   return (
     <div className="hawkerbox">
       <div className="topbox1">
-        <h4>{props.username}</h4>
-        <h4>{props.title}</h4>
+        <p style={{cursor:"pointer"}}><span><b>Hawker's Name:</b></span>{props.username}</p>
+        </div>
+        <div className="topbox1">
+        <p style={{cursor:"pointer"}}><span><b>Hawker Category:</b></span>{props.title}</p>
       </div>
       <div className="topbox2">
-        <h5>
-          {props.items ? (
+        <p style={{cursor:"pointer"}}>
+        <span><b>Items Sold:</b></span>
+        <ul>
+        {props.items ? (
             props.items.map((it, key) => {
-              return <div key={key}>{it}</div>;
+              return <div style={{cursor:"pointer"}} key={key}><li>{it}</li></div>;
             })
           ) : (
             <></>
           )}
-        </h5>
+        </ul>
+        </p>
       </div>
       <hr/>
     </div>

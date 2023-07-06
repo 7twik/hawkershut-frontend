@@ -1,6 +1,7 @@
-import { useState } from "react";
+ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./navbare.css";
+import Badge from 'react-bootstrap/Badge';
 //import { bars } from '@fortawesome/free-solid-svg-icons';
   ///////////////////////////////////HOMEPAGE NAVBAR /////////////////
 import { BsFillHddStackFill } from "react-icons/bs";
@@ -54,7 +55,7 @@ const BNavbar = (props) => {
                 Home
               </li>
               <li className="hov pot" onClick={current}>
-                Current Orders
+                Current Orders <Badge bg="secondary">{props.num}</Badge>
               </li>
               <li className="hov pot"  onClick={past}>
                 Past Orders

@@ -17,6 +17,7 @@ import Download from "../Download/Download";
 import { use } from "i18next";
 import HawkersHut from "../../contracts/HawkerHut.json";
 import HawkerBox from "../../components/HawkerBox/HawkerBox";
+import { set } from "date-fns";
 function Map(props) {
   AOS.init();
   const myStorage = window.localStorage;
@@ -149,14 +150,15 @@ function Map(props) {
         console.log(err);
       }
     };
-    const getItems=async()=>{
-      try{
-        const allItems = await axios.get("https://hawkerhut-back.onrender.com/api/items");
-      console.log(allItems.data[0].item);
-      console.log(allItems.data[0].username);
-      setItems(allItems.data);
-      }
-      catch(err){
+    const getItems = async () => {
+      try {
+        const allItems = await axios.get(
+          "https://hawkerhut-back.onrender.com/api/items"
+        );
+        console.log(allItems.data[0].item);
+        console.log(allItems.data[0].username);
+        setItems(allItems.data);
+      } catch (err) {
         console.log(err);
       }
     };
@@ -166,32 +168,31 @@ function Map(props) {
 
   // console.log(productList);
   const [searchVal, setSearchVal] = useState("");
- const [reset,setReset]=useState(0);
+  const [reset, setReset] = useState(0);
 
- /////////////////search function/////////////////////
-  function handleSearch(){
+  /////////////////search function/////////////////////
+  function handleSearch() {
     if (searchVal === "") {
       // setProducts(items);
       return;
     }
     const filterBySearch = items.filter((it) => {
       console.log(it);
-      if ((it.item).toLowerCase().includes(searchVal.toLowerCase())) {
-        return (it.username);
+      if (it.item.toLowerCase().includes(searchVal.toLowerCase())) {
+        return it.username;
       }
     });
     console.log(filterBySearch);
 
     const filterBySearch2 = sideBox.filter((ppp) => {
-      for(let k=0;k<filterBySearch.length;k++){
-        if(ppp.username===filterBySearch[k].username){
-          return ppp ;
+      for (let k = 0; k < filterBySearch.length; k++) {
+        if (ppp.username === filterBySearch[k].username) {
+          return ppp;
         }
       }
     });
-    console.log(filterBySearch2)
+    console.log(filterBySearch2);
     setSideBox(filterBySearch2);
-
   }
   const [tempUser, setTempUser] = useState();
   const openModal = (e, usernamee) => {
@@ -227,10 +228,10 @@ function Map(props) {
     contract: null,
   });
   useEffect(() => {
-    const provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:8545");
+    // const provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:8545");
 
     async function template() {
-      const web3 = new Web3(provider);
+      const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = HawkersHut.networks[networkId];
       const contract = new web3.eth.Contract(
@@ -240,7 +241,7 @@ function Map(props) {
       console.log(contract);
       setState({ web3: web3, contract: contract });
     }
-    provider && template();
+    template();
   }, []);
 
   ////////////////////////////////////////////
@@ -358,13 +359,13 @@ function Map(props) {
   /////////////////////////ADD CIRCLE CONDITION///////////////////////
   const [sideBox, setSideBox] = useState([]);
   useEffect(() => {
-    if(pins)
-    {
-      let arr=[];
-      for(let i=0;i<pins.length;i++)
-      {
-        if((Math.abs(per.lat-pins[i].lat)<0.5) && (Math.abs(per.long-pins[i].long)<0.5))
-        {
+    if (pins) {
+      let arr = [];
+      for (let i = 0; i < pins.length; i++) {
+        if (
+          Math.abs(per.lat - pins[i].lat) < 0.5 &&
+          Math.abs(per.long - pins[i].long) < 0.5
+        ) {
           // setSideBox((items)=>(
           //   [...items,
           //    pins[i]]
@@ -374,7 +375,18 @@ function Map(props) {
       }
       setSideBox(arr);
     }
-  }, [pins,reset]);
+  }, [pins, reset]);
+
+  const [sideCoor, setSideCoor] = useState({ lat: 0, long: 0,title:"abc",username:"abc",desc:"abc",items:['abc'],_id:"abc" });
+
+  function handleHawkerClick(e, userNameeee) {
+    e.preventDefault();
+    sideBox.map((side) => {
+      if (side.username === userNameeee) {
+        setSideCoor(side);
+      }
+    });
+  }
 
   return (
     <>
@@ -387,39 +399,69 @@ function Map(props) {
       >
         <div className="moddd">
           {download ? (
-            <>
-              {!state.contract ? <WrongNetwork /> : <></>}
+            <div className="reques">
+              {!state.contract ? <WrongNetwork /> : <>
               <div className="mod-top">Please Place Your Request </div>
               <span>Order for : {tempUser}</span>
               <br />
+              <br />
               Place Orders:
+              <br/>
+              <br/>
+              <div className="requesin">
+                Message: &nbsp;
               <input
+                className="requesmes"
                 type="text"
                 placeholder="Enter your requirements or message for the hawker"
                 ref={mesRef}
-              />
+              /></div>
               <br />
+              <br />
+              <div className="requesin">
+                Phone No: &nbsp;
               <input
+                className="requesmes"
                 type="number"
                 placeholder="Enter your phone no"
                 ref={phoneRef}
-              />
+              /></div>
               <br />
+              <br />
+              <div className="requesin">
+                Amount: &nbsp;
               <input
+                className="requesmes"
                 type="text"
                 placeholder="Enter amount(min. 0.1)"
                 ref={amountRef}
               />
+              </div>
               <br />
-              <button onClick={handleOrderSubmit}>Submit</button>
-            </>
+              <br />
+              <div className="btncenter">
+              <Button variant="success" onClick={handleOrderSubmit}>Submit</Button></div></>}
+            </div>
           ) : (
-            <>
+            <div className="reques">
               <Download />
-            </>
+            </div>
           )}
         </div>
       </Modal>
+      <div className="searchbar">
+            <input
+              type="text"
+              placeholder="Sea  rch for your favourite food"
+              onChange={(e) => setSearchVal(e.target.value)}
+            />
+            <button className="searchbtn" onClick={handleSearch}>
+              <AiOutlineSearch />
+            </button>
+            <button className="searchbtn" onClick={() => setReset(reset + 1)}>
+              Reset
+            </button>
+          </div>
 
       <div
         className="parentcon"
@@ -430,6 +472,7 @@ function Map(props) {
           justifyContent: "space-arond",
         }}
       >
+
         <div
           style={{
             height: "100vh",
@@ -450,9 +493,9 @@ function Map(props) {
             onViewportChange={(viewport) => setViewport(viewport)}
             onDblClick={currentUsername && handleAddClick}
           >
-            <Source id="circle-data" type="geojson" data={circleData}>
+            {/* <Source id="circle-data" type="geojson" data={circleData}>
               <Layer {...circleLayer} />
-            </Source>
+            </Source> */}
             {/* <Layer
               type="circle"
               id="circle-layer"
@@ -476,8 +519,8 @@ function Map(props) {
                 }}
               />
             </Marker>
-            {pins.map((p) => (
-              <>
+            {pins.map((p, key) => (
+              <div key={key}>
                 <Marker
                   latitude={p.lat}
                   longitude={p.long}
@@ -515,7 +558,7 @@ function Map(props) {
                       <p className="desc">{p.desc}</p>
                       <label>Items To Be Sold</label>
                       <p className="items">
-                        {p.items.map((item,key) => (
+                        {p.items.map((item, key) => (
                           <span key={key}>{item}, </span>
                         ))}
                       </p>
@@ -533,8 +576,61 @@ function Map(props) {
                     </div>
                   </Popup>
                 )}
-              </>
+              </div>
             ))}
+            <Marker
+              latitude={sideCoor.lat}
+              longitude={sideCoor.long}
+              offsetLeft={-3.5 * viewport.zoom}
+              offsetTop={-7 * viewport.zoom}
+            >
+              <Room
+                className="map_mark"
+                style={{
+                  fontSize: 5 * viewport.zoom,
+                  color:"green",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleMarkerClick(sideCoor._id, sideCoor.lat, sideCoor.long)}
+              />
+            </Marker>
+            <Popup
+                    key={sideCoor._id}
+                    latitude={sideCoor.lat}
+                    longitude={sideCoor.long}
+                    closeButton={true}
+                    closeOnClick={true}
+                    onClose={() => {
+                      setSideCoor({ lat: 0, long: 0,title:"abc",username:"abc",desc:"abc",items:['abc'],_id:"abc" })
+                      setCurrentPlaceId(null)}}
+                    anchor="left"
+                    className="map-popup"
+                  >
+                    <div className="card">
+                      {/* card for inner card css change and mapboxgl-popup-content css change */}
+                      <label>Hawker Category</label>
+                      <h4 className="place">{sideCoor.title}</h4>
+                      <label>Description</label>
+                      <p className="desc">{sideCoor.desc}</p>
+                      <label>Items To Be Sold</label>
+                      <p className="items">
+                        {sideCoor.items.map((item, key) => (
+                          <span key={key}>{item}, </span>
+                        ))}
+                      </p>
+                      <label>Hawker Name</label>
+                      <p className="username">{sideCoor.username} </p>
+                      {/* <span className="date">{format(p.createdAt)}</span> */}
+                      <Button
+                        onClick={() => {
+                          setTempUser(sideCoor.username);
+                          onOpenModal();
+                        }}
+                      >
+                        Request Visit
+                      </Button>
+                    </div>
+                  </Popup>
           </ReactMapGL>
         </div>
         <div
@@ -546,36 +642,31 @@ function Map(props) {
             marginRight: "10vh",
           }}
         >
-          {/* Search bar for customer */}
-          <div className="searchbar">
-            <input
-              type="text"
-              placeholder="Sea  rch for your favourite food"
-              onChange={(e) => setSearchVal(e.target.value)}
-            />
-            <button className="searchbtn" onClick={handleSearch}>
-              <AiOutlineSearch />
-            </button>
-            <button className="searchbtn" onClick={()=>setReset(reset+1)}>Reset</button>
-          </div>
-          <div>
-            {/* {products.map((product,key) => {
-              return (
-                <div style={{ color: "white", background: "green" }} key={key}>
-                  {product.username}and {product.item}
-                </div>
-              );
-            })} */}
-          </div>
           <div className="writeuph">
             <h2 style={{ color: "white" }}>Hawkers Near You</h2>
           </div>
 
-          {(sideBox==null)?<>No hawkerr nearby</>:<>
-            {sideBox.map((p,key) => (
-              <HawkerBox key={key} username={p.username} title={p.title} items={p.items} />
-             ))}
-          </>}
+          {sideBox == null ? (
+            <h2>No hawker nearby</h2>
+          ) : (
+            <div className="hawkerboxGrandParent">
+            <div className="hbp">
+              {sideBox.map((p, key) => {
+                let usernameee = p.username;
+                return (
+                  <div className="hawkerboxParent" key={key} onClick={(e)=>{handleHawkerClick(e, usernameee)}} >
+                    <HawkerBox
+                      key={key}
+                      username={p.username}
+                      title={p.title}
+                      items={p.items}
+                    />
+                  </div>
+                );
+              })}
+              </div>
+            </div>
+          )}
           {/* <div className="btn_div">
             <button className="btn_start" style={{ backgroundColor: "green" }}>
               Get Started

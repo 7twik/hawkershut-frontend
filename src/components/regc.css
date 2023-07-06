@@ -9,7 +9,7 @@
 .signup-section{
     background-color: rgba(11, 78, 62, 0.650) ;
     padding: 2vh 2vw;
-    height: 84vh;
+    height: 74vh;
     width: 35vw;
     margin-top: 1.8vh;
 }
@@ -62,10 +62,10 @@
     .signupOutDiv{
         height: 100vh;
     }
-    .signup-section{
-        width: 75vw;
-        height: 88vh;
-    }
+.signup-section {
+    width: 90vw;
+    height: 70vh;
+}
     .signup-btn{
         margin-top: -1vh;
         margin-bottom: 1vh;

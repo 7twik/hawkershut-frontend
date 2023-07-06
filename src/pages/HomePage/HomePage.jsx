@@ -13,6 +13,7 @@ import Download from "../Download/Download";
 import WrongNetwork from "../WrongNetwork/WrongNetwork";
 import CCurrentorders from '../CCurrentorders/CCurrentorders';
 import CPastorders from '../CPastorders/CPastorders';
+import FAQ from '../../components/faq/FAQ';
 const HomePage = () => {
   const [success,setS]=React.useState(false);
   // const [note,setNotes]=React.useState();
@@ -94,7 +95,8 @@ const HomePage = () => {
       <Map user={currentUsername} />
       <Categories /></>
     :(tab===1)?<> <CCurrentorders user={currentUsername} /> </>:<><CPastorders user={currentUsername} /></>}
-      <About />
+      {/* <About /> */}
+      <FAQ />
       <div className="Footer">
         <Footer />
       </div>

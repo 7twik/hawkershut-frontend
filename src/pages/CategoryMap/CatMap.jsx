@@ -1,13 +1,20 @@
 import "./app.css";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Room } from "@material-ui/icons";
 import axios from "axios";
-import { format } from "timeago.js";
+import Button from "react-bootstrap/esm/Button";
+import { Modal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
+import Web3 from "web3";
+import WrongNetwork from "../WrongNetwork/WrongNetwork";
+import Download from "../Download/Download";
 // import Register from "../Register";
 // import Login from "../Login";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+import HawkersHut from "../../contracts/HawkerHut.json";
 //import { width } from "@mui/system";
 
 function CatMap(props) {
@@ -19,9 +26,11 @@ function CatMap(props) {
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [desc, setDesc] = useState(null);
-  const [star, setStar] = useState(0);
+  const [tempUser, setTempUser] = useState();
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
   const [viewport, setViewport] = useState({
     latitude: 47.040182,
     longitude: 17.071727,
@@ -59,28 +68,7 @@ function CatMap(props) {
       });
     });
   }, []);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newPin = {
-      username: currentUsername,
-      title,
-      desc,
-      rating: star,
-      lat: newPlace.lat,
-      long: newPlace.long,
-    };
-
-    try {
-      const res = await axios.post(
-        "https://hawkerhut-back.onrender.com/api/pins",
-        newPin
-      );
-      setPins([...pins, res.data]);
-      setNewPlace(null);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+ 
 
   useEffect(() => {
     const getPins = async () => {
@@ -117,8 +105,197 @@ function CatMap(props) {
   useEffect(() => {
     console.log(screenWidth);
   }, []);
+
+
+
+  ///////////web3///////////////////////////////////
+
+  
+  const [customer, setCustomer] = useState(currentUsername);
+  const orderRef = useRef();
+  const phoneRef = useRef();
+  const amountRef = useRef();
+  const mesRef = useRef();
+  const { ethereum } = window;
+  /////////////////hash for payment////////////////////
+
+  function handleAccountsChanged() {
+    // Handle new accounts, or lack thereof.
+    setCount(count + 1);
+  }
+  React.useEffect(() => {
+    if (ethereum) {
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
+      window.ethereum.on("chainChanged", handleAccountsChanged);
+    }
+  });
+
+  const [count, setCount] = useState(0);
+  const [state, setState] = useState({
+    web3: null,
+    contract: null,
+  });
+  useEffect(() => {
+    //const provider = new Web3.providers.HttpProvider(Web3.givenProvider);
+
+    async function template() {
+      const web3 = new Web3(Web3.givenProvider||"ws://localhost:8545");
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = HawkersHut.networks[networkId];
+      const contract = new web3.eth.Contract(
+        HawkersHut.abi,
+        deployedNetwork.address
+      );
+      console.log(contract);
+      setState({ web3: web3, contract: contract });
+    }
+    template();
+  }, []);
+
+  ////////////////////////////////////////////
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      Sper({
+        lat: pos.coords.latitude,
+        long: pos.coords.longitude,
+      });
+    });
+  }, []);
+  function hashGenerator() {
+    const length = 16;
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+  const handleOrderSubmit = async () => {
+    if (phoneRef.current.value.length !== 10) {
+      alert("Enter a valid phone no");
+    } else {
+    const { contract } = state;
+    ////////////////web3 connect and ask payment//////////////////////
+    const accountss = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    const Hash = hashGenerator();
+    console.log(Hash);
+    let vale = amountRef.current.value.toString();
+    const res = await contract.methods
+      .pay(Hash)
+      .send({ value: Web3.utils.toWei(vale, "ether"), from: accountss[0] });
+    console.log(res);
+    const va = res.events.success.returnValues[2].toString();
+    alert(
+      res.events.success.returnValues[0] +
+        "\n Payment: " +
+        Web3.utils.fromWei(va, "ether") +
+        " Eth"
+    );
+    if (res.events.success.returnValues[1]) {
+      /////////////////if error or denied then cancel order///////////////
+      const data = {
+        Hash: Hash,
+        CUser: props.user,
+        HUser: tempUser,
+        CPhone: phoneRef.current.value,
+        Lat: per.lat,
+        Long: per.long,
+        Message: mesRef.current.value,
+      };
+
+      
+        await axios.post(
+          "https://hawkerhut-back.onrender.com/api/web3/order",
+          data
+        );
+        console.log(
+          "O: " +
+            orderRef.current.value +
+            " P:" +
+            phoneRef.current.value +
+            " L:" +
+            per.lat +
+            " L:" +
+            per.long
+        );
+        onCloseModal();
+      }
+    }
+  };
+  const [download, setDownload] = useState(false);
+  useEffect(() => {
+    if (ethereum) {
+      setDownload(true);
+    }
+  });
+
+
+  //////////////////////////////////////////////////
   return (
     <>
+    <Modal
+        className="mode"
+        open={open}
+        onClose={onCloseModal}
+        closeOnOverlayClick={false}
+        center={true}
+      >
+        <div className="moddd">
+          {download ? (
+            <div className="reques">
+              {!state.contract ? <WrongNetwork /> : <>
+              <div className="mod-top">Please Place Your Request </div>
+              <span>Order for : {tempUser}</span>
+              <br />
+              <br />
+              Place Orders:
+              <br/>
+              <br/>
+              <div className="requesin">
+                Message: &nbsp;
+              <input
+                className="requesmes"
+                type="text"
+                placeholder="Enter your requirements or message for the hawker"
+                ref={mesRef}
+              /></div>
+              <br />
+              <br />
+              <div className="requesin">
+                Phone No: &nbsp;
+              <input
+                className="requesmes"
+                type="number"
+                placeholder="Enter your phone no"
+                ref={phoneRef}
+              /></div>
+              <br />
+              <br />
+              <div className="requesin">
+                Amount: &nbsp;
+              <input
+                className="requesmes"
+                type="text"
+                placeholder="Enter amount(min. 0.1)"
+                ref={amountRef}
+              />
+              </div>
+              <br />
+              <br />
+              <div className="btncenter">
+              <Button variant="success" onClick={handleOrderSubmit}>Submit</Button></div></>}
+            </div>
+          ) : (
+            <div className="reques">
+              <Download />
+            </div>
+          )}
+        </div>
+      </Modal>
       <div
         className="parentcon"
         data-aos="fade-up"
@@ -212,6 +389,14 @@ function CatMap(props) {
                         <label>Hawker Name</label>
                         <p className="username">{p.username} </p>
                       </div>
+                      <Button
+                        onClick={() => {
+                          setTempUser(p.username);
+                          onOpenModal();
+                        }}
+                      >
+                        Request Visit
+                      </Button>
                     </Popup>
                   )}
                 </>
@@ -229,18 +414,13 @@ function CatMap(props) {
           }}
         >
           <div className="writeuph">
-            <h2 style={{ color: "white" }}>Your Own Business</h2>
+            <h2 style={{ color: "white" }}> Welcome to your very own online customer portal. </h2>
           </div>
           <span style={{ color: "white" }}>
-            Welcome to your very own online buiness portal.Set your Hawker's ID
-            to get your business rolling!!!
+           Here you can find
+            all the nearby hawkers and their details. You can also request a
+            visit to the hawker and get your order delivered to your doorstep.
           </span>
-
-          <div className="btn_div">
-            <button className="btn_start" style={{ backgroundColor: "green" }}>
-              Get Started
-            </button>
-          </div>
         </div>
       </div>
     </>

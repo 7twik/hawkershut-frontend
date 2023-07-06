@@ -16,9 +16,7 @@
   font-size: 3rem;
   min-height: 37.5vh;
   box-shadow: 1px 1px 20px #888888;
-  
 }
-
 
 .col-lg-4:hover{
   background-color: rgb(119, 117, 117);
@@ -43,41 +41,49 @@ color:whitesmoke;
 .col1{
   background:url('../../../public/images/icecream.jpg');
   background-size: cover;
+  cursor: pointer;
 }
 
 .col2{
   background:url('../../../public/images/Vegetables.png');
   background-size: cover;
+  cursor: pointer;
 }
 .col3{
   background:url('../../../public/images/paniPuri.png');
   background-size: cover;
+  cursor: pointer;
 }
 .col4{
   background:url('../../../public/images/streetfood.png');
   background-size: cover;
+  cursor: pointer;
 }
 .col5{
   background:url('../../../public/images/bakery.png');
   background-size: cover;
+  cursor: pointer;
 }
 .col6{
   background:url('../../../public/images/cold_drinks.jpg');
   background-size: cover;
+  cursor: pointer;
 }
 .col7{
   background:url('../../../public/images/fish.jpg');
   background-size: cover;
+  cursor: pointer;
 }
 .col8{
   background:url('../../../public/images/cobbler.jpg');
   background-size: cover;
+  cursor: pointer;
 }
 .col9{
   background:url('../../../public/images/electronics.jpg');
   background-size: cover;
+  cursor: pointer;
 }
-
 
 @media screen and (max-width: 600px) {
   .col-lg-4{
@@ -85,14 +91,9 @@ color:whitesmoke;
     width: 10rem;
     height: 10rem;
     margin: 5% 5%;
-
   }
-
   .row{
     width: 100%; 
     padding: 0 5%;
   }
-  /* .container-fluid{
-    height: 100vh !important;
-  } */
 }
