@@ -1,4 +1,3 @@
-// import { Cancel, Room } from "@material-ui/icons";
 import axios from "axios";
 import { useRef, useState } from "react";
 import "./register.css";
@@ -30,7 +29,11 @@ export default function Register({ setShowRegister }) {
   };
   return (
     <div className="registerContainer">
-      <form onSubmit={handleSubmit}>
+      {/* <div className="logo">
+        <Room className="logoIcon" />
+        <span>LamaPin</span>
+      </div> */}
+      <div className="formHawker">
         <input autoFocus placeholder="username" ref={usernameRef} />
         <input type="email" placeholder="email" ref={emailRef} />
         <input
@@ -39,14 +42,18 @@ export default function Register({ setShowRegister }) {
           placeholder="password"
           ref={passwordRef}
         />
-        <button className="registerBtn" type="submit">
+        <button className="registerBtn" onClick={handleSubmit}>
           Register
         </button>
         {success && (
           <span className="success">Successfull. You can login now!</span>
         )}
         {error && <span className="failure">Something went wrong!</span>}
-      </form>
+      </div>
+      {/* <Cancel
+        className="registerCancel"
+        onClick={() => setShowRegister(false)}
+      /> */}
     </div>
   );
 }

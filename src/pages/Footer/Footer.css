@@ -11,7 +11,7 @@ a{
 }
 .Footer{
   
-  background-color: #20262E;
+  background-color: #000308;
 }
 
 .footer-elements{
@@ -115,5 +115,6 @@ a{
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-right: 0!important;
   }
 }

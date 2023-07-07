@@ -15,9 +15,10 @@ const Categories = () => {
     <div>
       <div className="container-fluid text-center">
         <div className="row">
-          <div className="Faqq" data-aos="fade-up">
+          <div className="Faqq" data-aos="fade-up" >
             Categories
           </div>
+          <h4 style={{width:"75vw",color:"#615d5d"}}>Check our wide range of categories and see which hawker is nearby your location to place your order quickly.</h4>
           <div
             className="col-lg-4 col1"
             onClick={handleClick}

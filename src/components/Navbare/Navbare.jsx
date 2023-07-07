@@ -31,7 +31,7 @@ function past(){
             <NavLink to="/">
               <img
                 className="logN"
-                src="https://res.cloudinary.com/dqy7m95yz/image/upload/v1678477011/logo_b_w_3_hcngve.png"
+                src="./Logo.png"
                 // src="https://res.cloudinary.com/dqy7m95yz/image/upload/v1677352785/icon2_1_pdxuih.png"
                 alt="nf"
               />

@@ -3,7 +3,7 @@
   height: 200px;
   padding: 20px;
   border-radius: 10px;
-  background-color: white;
+  /* background-color: white; */
   position: absolute;
   top: 0;
   bottom: 0;
@@ -14,7 +14,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: #20262E;
+  /* background-color: #20262E; */
+  
 }
 
 .loginCancel {
@@ -45,3 +46,19 @@
   color: red;
   text-align: center;
 }
+
+.formHawker {
+  width: 20vw;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: rgb(88, 87, 87);
+}
+@media(max-width:850px){
+  .formHawker{
+    width: 80vw !important;
+    height: 40vh !important;
+  }
+}
+

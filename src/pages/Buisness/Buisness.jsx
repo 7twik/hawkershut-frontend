@@ -20,6 +20,11 @@ import BCurrentorders from "../BCurrentorders/BCurrentorders";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TodoList from "../../components/todo/TodoList";
+import { border } from "@chakra-ui/react";
+import styled from "@emotion/styled";
+import {RxCross2} from "react-icons/rx";
+import FAQ from "../../components/faq/FAQ";
+import Video from "../Video/Video";
 // Contains the value and text for the options
 const languages = [
   { value: "", text: "Options" },
@@ -370,6 +375,7 @@ function Buisness() {
         onClose={onCloseModal}
         closeOnOverlayClick={false}
         center={true}
+        closeIcon={<RxCross2 style={{color:"white",fontSize:"25px"}} />}
       >
         <div className="moddd">
           <div className="mod-top">Please select your local language </div>
@@ -390,6 +396,7 @@ function Buisness() {
         onClose={onCloseModal1}
         closeOnOverlayClick={false}
         center={true}
+        closeIcon={<RxCross2 style={{color:"white",fontSize:"25px"}} />}
       >
         <div className="loginn">
           <Login
@@ -405,6 +412,7 @@ function Buisness() {
         onClose={onCloseModal2}
         closeOnOverlayClick={false}
         center={true}
+        closeIcon={<RxCross2 style={{color:"white",fontSize:"25px"}} />}
       >
         <div className="reginn">
           <Register setShowRegister={onCloseModal2} />
@@ -570,7 +578,7 @@ function Buisness() {
                 <div className="btn_div">
                   <button
                     className="btn_start"
-                    style={{ background: "green" }}
+                    style={{ background: "#00d3ad",border:"none" }}
                     onClick={() => {
                       const element = document.getElementById("gets");
                       element.scrollIntoView();
@@ -585,20 +593,25 @@ function Buisness() {
                     <button
                       className="btn_start"
                       style={{
-                        background: "purple",
+                        background: "#5553B7",
                         color: "white",
                         borderRadius: "7px",
+                        border:"none"
                       }}
                     >
                       Business Hours &nbsp;
-                      <ReactSwitch checked={checked} onChange={handleChange1} />
+                      <ReactSwitch 
+                      offColor="#bebebe"
+                      onColor="#47aaf2"
+                      // style={(checked)?{backgroundColor:"#47aaf2"}:{backgroundColor:"white"}}
+                       checked={checked} onChange={handleChange1} />
                     </button>
                   </div>
                 )}
 
                 {currentUsername ? (
                   <div className="btn_div">
-                    <button className="btn_start login" onClick={handleLogout}>
+                    <button className="btn_start login" onClick={handleLogout} style={{backgroundColor:"#d40000",border:"none"}}>
                       {t("b4")}
                     </button>
                   </div>
@@ -628,7 +641,7 @@ function Buisness() {
                 {checked && currentUsername !== null && (
                   <>
                     <div className="busi_forms">
-                      <label>Category:</label>
+                      <label className="labelb" style={{color:"#818181",textDecoration:"none"}}>Category:</label>
                       <select
                         value={title}
                         onChange={async (e) => {
@@ -652,7 +665,7 @@ function Buisness() {
                           All in One Store
                         </option>
                       </select>
-                      <label>Description</label>
+                      <label className="labelb">Description</label>
                       <textarea
                         value={desc}
                         placeholder="Give a description about your business"
@@ -665,21 +678,15 @@ function Buisness() {
                       {/* <label>Items</label>
                   <textarea
                     placeholder="What items are you selling" /> */}
-                      <label>Current Items</label>
+                      <label className="labelb">Current Items</label>
                       <TodoList
                         setCurrentUsername={currentUsername}
                         todoChange={todoChange}
                         todoDelete={todoDelete}
                       />
                       <button
-                        className="btn_start"
+                        className="btn_start submit"
                         onClick={(e) => handleFormSubmit(e)}
-                        style={{
-                          background: "red",
-                          marginTop: "3vh",
-                          padding: "-5px",
-                          borderRadius: "4px",
-                        }}
                       >
                         Submit
                       </button>
@@ -693,7 +700,8 @@ function Buisness() {
             {t("beforeGS")}
           </div>
           <div id="gets">
-            <GetStarted lang={lang} data-aos="fade-up" />
+            {/* <GetStarted lang={lang} data-aos="fade-up" /> */}
+            <Video url="https://youtu.be/fd1Q9T8ZzzE" text="Want to know on how to use our platform?" />
           </div>
         </>
       ) : tab === 1 ? (
@@ -705,6 +713,7 @@ function Buisness() {
           <BPastorders user={currentUsername} />
         </>
       )}
+      <FAQ />
       <Footer />
     </>
   );

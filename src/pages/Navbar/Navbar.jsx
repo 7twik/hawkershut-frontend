@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="container">
         <div className="logoo">
         <NavLink to="/">
-        <img className='logN' src="https://res.cloudinary.com/dqy7m95yz/image/upload/v1678477011/logo_b_w_3_hcngve.png" alt="nf" />
+        <img className='logN' src="../../../public/Logo.png" alt="nf" />
         </NavLink>
           {/* <img className='logN' src="https://res.cloudinary.com/dcyfkgtgv/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1672838305/Dark_Beige_Modern_Real_Estate_Building_Logo-removebg-preview_xx8tar.jpg" alt="nf" /> */}
         </div>

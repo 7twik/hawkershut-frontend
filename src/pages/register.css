@@ -51,3 +51,18 @@
   color: red;
   text-align: center;
 }
+
+.formHawker {
+  width: 20vw;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: rgb(88, 87, 87);
+}
+@media(max-width:850px){
+  .formHawker{
+    width: 80vw !important;
+    height: 40vh !important;
+  }
+}

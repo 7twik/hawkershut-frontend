@@ -1,9 +1,8 @@
-// import { Cancel, Room } from "@material-ui/icons";
 import axios from "axios";
 import { useRef, useState } from "react";
 import "./login.css";
 
-export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
+export default function Login({ setShowLogin, setCurrentUsername, myStorage }) {
   const [error, setError] = useState(false);
   const usernameRef = useRef();
   const passwordRef = useRef();
@@ -15,9 +14,12 @@ export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
       password: passwordRef.current.value,
     };
     try {
-      const res = await axios.post("https://hawkerhut-back.onrender.com/api/users/login", user);
+      const res = await axios.post(
+        "https://hawkerhut-back.onrender.com/api/users/login",
+        user
+      );
       setCurrentUsername(res.data.username);
-      myStorage.setItem('user', res.data.username);
+      myStorage.setItem("user", res.data.username);
       setShowLogin();
     } catch (err) {
       setError(true);
@@ -26,7 +28,7 @@ export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
 
   return (
     <div className="loginContainer">
-      <form onSubmit={handleSubmit}>
+      <div className="formHawker">
         <input autoFocus placeholder="username" ref={usernameRef} />
         <input
           type="password"
@@ -34,11 +36,11 @@ export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
           placeholder="password"
           ref={passwordRef}
         />
-        <button className="loginBtn" type="submit">
+        <button className="loginBtn" onClick={handleSubmit}>
           Login
         </button>
         {error && <span className="failure">Something went wrong!</span>}
-      </form>
+      </div>
     </div>
   );
 }

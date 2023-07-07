@@ -11,6 +11,9 @@ import "./App.css";
 import "./i18n.js";
 import Cate from "./pages/CategoryMajor/Cate";
 import Member from "./pages/Member/Member";
+import ContactUs from "./pages/Report/ContactUs";
+import Work from "./pages/Report/Work";
+import Report from "./pages/Report/ReportProblem";
 function App() {
   const [data, setData] = useState(false);
   useEffect(() => {
@@ -43,6 +46,9 @@ function App() {
               <Route path="/category" element={<Cate />} />
               {/* Admin route */}
               <Route path="/admin" element={<Member />} />
+              <Route path="/JoinUs" element={<Work />} />
+              <Route path="/Report" element={<Report />} />
+              <Route path="/Contact" element={<ContactUs />} />
             </Routes>
           </>
         </>

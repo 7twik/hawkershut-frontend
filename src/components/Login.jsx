@@ -6,7 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../pages/Navbar/Navbar";
 import "./loginc.css";
 import axios from "axios";
-
 const Login = ({ setShowLogin, setCurrentUsername,myStorage }) => {
   const [passShow, setPassShow] = useState(false);
 
@@ -44,12 +43,11 @@ const Login = ({ setShowLogin, setCurrentUsername,myStorage }) => {
       setError(true);
     }
   };
-  
+
 
   return (
     <>
       <Navbar />
-    
       <div className="loginOutDiv">
         <section className="login-section">
           <div className="form-login">

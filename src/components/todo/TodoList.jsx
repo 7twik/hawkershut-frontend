@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./todoList.css";
+import "./TodoList.css";
 function TodoList({ setCurrentUsername,todoChange,todoDelete }) {
   const myStorage = window.localStorage;
   const [todos, setTodos] = useState(
@@ -8,7 +8,6 @@ function TodoList({ setCurrentUsername,todoChange,todoDelete }) {
   );
   const [inputValue, setInputValue] = useState("");
   const [editingIndex, setEditingIndex] = useState(-1);
-  // const [editValue, setEditValue] = useState("");
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -75,76 +74,36 @@ function TodoList({ setCurrentUsername,todoChange,todoDelete }) {
     }
   };
 
-  // const handleEditTodo = (e,index) => {
-  //   e.preventDefault();
-  //   setEditingIndex(index);
-  //   setEditValue(todos[index]);
-  // };
-
-  // const handleCancelEdit = (e) => {
-  //   e.preventDefault();
-  //   setEditingIndex(-1);
-  //   setEditValue("");
-  // };
   return (
     <div>
-      <input
+    <div style={{display:"flex",justifyContent:"space-between",paddingBottom:"2vh"}}>
+    <input
         type="text"
         placeholder="Type your items here"
         value={inputValue}
         onChange={handleInputChange}
-        style={{ width: "210px" }}
+        style={{ width: "250px" }}
       />
       <button
         onClick={(e) => handleAddTodo(e)}
-        style={{
-          marginLeft: "2vw",
-          background: "green",
-          padding: "3px 15px",
-          color: "white",
-          borderRadius: "3px",
-        }}
+        className="add-btn"
       >
-        {/* {editingIndex === -1 ? "Add" : "Save"} */}
-        Add
+         Add 
       </button>
-      {/* {editingIndex !== -1 && (
-        <button onClick={(e) => handleCancelEdit(e)}>Cancel</button>
-      )} */}
+    </div>
       <ol>
         {todos.map((todo, index) => (
-          <li key={index} style={{ color: "white" }}>
-            <span style={{ marginRight: "8vw", minWidth: "40px" }}>{todo}</span>
-            {/* {index === editingIndex ? (
-              <input
-                type="text"
-                value={editValue}
-                onChange={(e) => setEditValue(e.target.value)}
-                style={{
-                  width: "510px",
-                }}
-              />
-            ) : (
-              todo
-            )} */}
-
-            {/* <button onClick={(e) => handleEditTodo(e,index)}>
-              {index === editingIndex ? 'Save' : 'Edit'}
-            </button> */}
+          <li key={index} style={{ color: "#2b2e3d" }}>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+          <span style={{  minWidth: "40px" }}>{todo}</span>
             <button
               className="delete-btn"
               onClick={(e) => handleDeleteTodo(e, index)}
-              style={{
-                marginLeft: "2vw",
-                // marginTop: "1vh",
-                background: "red",
-                padding: "1px 15px",
-                color: "white",
-                borderRadius: "3px",
-              }}
             >
               Delete
             </button>
+          </div>
+           
           </li>
         ))}
       </ol>

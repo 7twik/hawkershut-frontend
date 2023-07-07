@@ -4,10 +4,10 @@ const HawkerBox = (props) => {
   return (
     <div className="hawkerbox">
       <div className="topbox1">
-        <p style={{cursor:"pointer"}}><span><b>Hawker's Name:</b></span>{props.username}</p>
+        <p style={{cursor:"pointer",fontSize:"25px"}}><span><b>Hawker's Name:</b></span>{props.username}</p>
         </div>
         <div className="topbox1">
-        <p style={{cursor:"pointer"}}><span><b>Hawker Category:</b></span>{props.title}</p>
+        <p style={{cursor:"pointer",fontSize:"18px"}}><span><b>Hawker Category:</b></span>{props.title}</p>
       </div>
       <div className="topbox2">
         <p style={{cursor:"pointer"}}>
@@ -23,7 +23,7 @@ const HawkerBox = (props) => {
         </ul>
         </p>
       </div>
-      <hr/>
+      <hr style={{width:"100%"}}/>
     </div>
   );
 };

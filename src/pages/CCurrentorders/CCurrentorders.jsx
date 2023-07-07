@@ -12,6 +12,7 @@ import { parse } from "date-fns";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import '../Admin/Admin.css';
+import { RxCross2 } from "react-icons/rx";
 const CCurrentorders = (props) => {
     const [customer, setCustomer] = React.useState(props.user);
     const orderRef = React.useRef();
@@ -275,6 +276,7 @@ const CCurrentorders = (props) => {
                 onClose={onCloseModal}
                 closeOnOverlayClick={false}
                 center={true}
+                closeIcon={<RxCross2 style={{color:"white",fontSize:"25px"}} />}
               >
                 <div className="moddd">
                   <div className="mod-top">

@@ -15,6 +15,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import HawkersHut from "../../contracts/HawkerHut.json";
+import { RxCross2 } from "react-icons/rx";
 //import { width } from "@mui/system";
 
 function CatMap(props) {
@@ -243,6 +244,7 @@ function CatMap(props) {
         onClose={onCloseModal}
         closeOnOverlayClick={false}
         center={true}
+        closeIcon={<RxCross2 style={{color:"white",fontSize:"25px"}} />}
       >
         <div className="moddd">
           {download ? (

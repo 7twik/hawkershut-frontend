@@ -12,8 +12,8 @@ const FAQ = () => {
         <div className="faq-left">
         <Accordion>
               <Accordion.Item eventKey="0" className="acc">
-                <Accordion.Header>Head 1</Accordion.Header>
-                <Accordion.Body>Lorem ipsump blah blah blah blah .</Accordion.Body>
+                <Accordion.Header>1.How to select any vernacular language other than English?</Accordion.Header>
+                <Accordion.Body>Now, you can select your preferred language from the “Select language” tab in the business portal according to your preference. .</Accordion.Body>
               </Accordion.Item>
 
               <Accordion.Item eventKey="1" className="acc">
